@@ -1,3 +1,4 @@
+import { Link } from "expo-router";
 import { useState } from "react";
 import { Text, View, StyleSheet, ScrollView, Pressable } from "react-native";
 
@@ -13,26 +14,57 @@ export default function Levels() {
   ];
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <View
         style={{
-          marginVertical: 80,
+          backgroundColor: "#63b5d6",
+          height: 120,
+          paddingBottom: 24,
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.25,
+          shadowRadius: 3.84,
+          elevation: 5,
+          flexDirection: "row",
+          //justifyContent: "center",
+          alignItems: "flex-end",
         }}
       >
-        {levels.map((level) => (
-          <Pressable
-            onPressIn={() => setPressed(level.id)}
-            onPressOut={() => setPressed(0)}
-            key={level.id}
-            style={pressed === level.id ? styles.levelPres : styles.level}
-          >
-            <Text style={styles.text}>{level.title}</Text>
-            <View style={styles.progressbar}></View>
-            <Text style={styles.textsm}>{level.progress}</Text>
-          </Pressable>
-        ))}
+        
+        <Link href="/" asChild>
+            <Text style={styles.headerTextL}>←</Text>
+        </Link>
+        <Text
+          style={styles.headerText}
+        >
+          Valitse taso
+        </Text>
+        <Text style={styles.headerTextR}></Text>
       </View>
-    </ScrollView>
+      <ScrollView>
+        <View
+          style={{
+            marginTop: 20,
+            marginBottom: 180,
+          }}
+        >
+          {levels.map((level) => (
+            <Link key={level.id} href={`levels/${level.id}`} asChild>
+              <Pressable
+                onPressIn={() => setPressed(level.id)}
+                onPressOut={() => setPressed(0)}
+                key={level.id}
+                style={pressed === level.id ? styles.levelPres : styles.level}
+              >
+                <Text style={styles.text}>{level.title}</Text>
+                <View style={styles.progressbar}></View>
+                <Text style={styles.textsm}>{level.progress}</Text>
+              </Pressable>
+            </Link>
+          ))}
+        </View>
+      </ScrollView>
+    </View>
   );
 }
 
@@ -89,5 +121,28 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 10,
     flexDirection: "row",
+  },
+  headerTextL: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#fff",
+    flex: 1,
+    textAlign: "left",
+    marginLeft: 40,
+  },
+  headerTextR: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#fff",
+    flex: 1,
+    textAlign: "right",
+    marginRight: 40,
+  },
+  headerText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#fff",
+    flex: 1,
+    textAlign: "center",
   },
 });

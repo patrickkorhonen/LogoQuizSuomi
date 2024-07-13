@@ -20,18 +20,6 @@ export default function Index() {
       >
         Logo Quiz Suomi
       </Text>
-      {/*
-      <Pressable
-        style={({ pressed }) => [
-          styles.button,
-          {
-            backgroundColor: pressed ? "#3a9ad9" : "#46b4e3",
-          },
-        ]}
-      >
-        <Text style={styles.text}>Pelaa</Text>
-      </Pressable>
-      */}
       <Link href="/levels" asChild>
         <Pressable
           onPressIn={() => setPressed(true)}
