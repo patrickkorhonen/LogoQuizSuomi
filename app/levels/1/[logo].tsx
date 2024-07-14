@@ -40,7 +40,6 @@ export default function Logo() {
         <Text style={styles.headerTextR}></Text>
       </View>
       <Text style={styles.text}>{logo}</Text>
-      <Text style={styles.text}>{text}</Text>
       <View>
         <Pressable
           style={{
@@ -53,15 +52,25 @@ export default function Logo() {
               flexDirection: "row",
               justifyContent: "center",
               flexWrap: "wrap",
-              backgroundColor: "#a3f0a6",
             }}
           >
             {logoArr.map((letter, index) => (
-              <View key={index}>
-                <Text style={styles.char}>_</Text>
-              </View>
+                <View key={index}>
+                  {text[index] != undefined ? (
+                    <View style={styles.boxtop} >
+                    <Text style={styles.char}>{text[index]}</Text>
+                    <Text style={styles.char2}>—</Text>
+                    </View>
+                  ) : (
+                    <View style={styles.boxtop} >
+                    <Text style={styles.char}>&nbsp;</Text>
+                    <Text style={styles.char2}>—</Text>
+                    </View>
+                  )}
+                </View>
             ))}
-          </View>
+            </View>
+  
         </Pressable>
 
         <TextInput
@@ -118,9 +127,25 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   char: {
-    fontSize: 70,
+    fontSize: 60,
     fontWeight: "300",
-    marginBottom: "auto",
-    margin: 6,
+    textTransform: "uppercase",
+
+    textAlign: "center",
+  },
+  char2: {
+    fontSize: 68,
+    fontWeight: "300",
+    textTransform: "uppercase",
+
+    textAlign: "center",
+    marginTop: -45,
+    marginBottom: -30,
+  },
+  boxtop: {
+    flexDirection: "column",
+    flexWrap: "wrap",
+    width: 60,
+    justifyContent: "center",
   },
 });
