@@ -1,21 +1,126 @@
-import { useLocalSearchParams } from "expo-router";
-import { Text, View, StyleSheet, ScrollView, Pressable } from "react-native";
+import { useLocalSearchParams, Link } from "expo-router";
+import { useRef, useState } from "react";
+import { Text, View, StyleSheet, TextInput, Pressable } from "react-native";
 
 export default function Logo() {
   const local = useLocalSearchParams();
   const logo = local.logo;
+  const logoArr = (typeof logo === "string" ? logo : "").split("");
+  const [text, onChangeText] = useState("");
+  const [keyboard, setKeyboard] = useState(false);
+  const inputRef = useRef(null);
+
+  const handleTextChange = (newText: string) => {
+    if (newText.length <= logoArr.length) {
+      onChangeText(newText); // Update only if within the logo string length
+    }
+  };
 
   return (
     <View>
-      <Text
+      <View
         style={{
-          fontSize: 40,
-          textAlign: "center",
-          marginTop: 20,
+          backgroundColor: "#63b5d6",
+          height: 120,
+          paddingBottom: 24,
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.25,
+          shadowRadius: 3.84,
+          elevation: 5,
+          flexDirection: "row",
+          //justifyContent: "center",
+          alignItems: "flex-end",
         }}
       >
-        {logo}
-      </Text>
+        <Link href="/levels/1" asChild>
+          <Text style={styles.headerTextL}>←</Text>
+        </Link>
+        <Text style={styles.headerText}></Text>
+        <Text style={styles.headerTextR}></Text>
+      </View>
+      <Text style={styles.text}>{logo}</Text>
+      <Text style={styles.text}>{text}</Text>
+      <View>
+        <Pressable
+          style={{
+            marginTop: 200,
+          }}
+          onPress={() => (inputRef.current as TextInput | null)?.focus()} // Focus the TextInput when pressed
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              flexWrap: "wrap",
+              backgroundColor: "#a3f0a6",
+            }}
+          >
+            {logoArr.map((letter, index) => (
+              <View key={index}>
+                <Text style={styles.char}>_</Text>
+              </View>
+            ))}
+          </View>
+        </Pressable>
+
+        <TextInput
+          ref={inputRef}
+          style={{ opacity: 0, height: 0, width: 0 }}
+          onChangeText={handleTextChange}
+          value={text}
+        />
+      </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#fff",
+  },
+  logo: {
+    backgroundColor: "#a3f0a6",
+    padding: 30,
+    margin: 30,
+  },
+  logoPres: {
+    backgroundColor: "#000000",
+    padding: 30,
+    margin: 30,
+  },
+  text: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: "auto",
+  },
+  headerTextL: {
+    fontSize: 20,
+    fontWeight: "900",
+    color: "#fff",
+    flex: 1,
+    textAlign: "left",
+    marginLeft: 40,
+  },
+  headerTextR: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#fff",
+    flex: 1,
+    textAlign: "right",
+    marginRight: 40,
+  },
+  headerText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#fff",
+    flex: 1,
+    textAlign: "center",
+  },
+  char: {
+    fontSize: 70,
+    fontWeight: "300",
+    marginBottom: "auto",
+    margin: 6,
+  },
+});

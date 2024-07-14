@@ -20,7 +20,7 @@ export default function Level1() {
     { id: 3, logo: "C", answer: "citroen", correct: false },
     { id: 4, logo: "D", answer: "dhl", correct: false },
     { id: 5, logo: "E", answer: "ebay", correct: false },
-    { id: 6, logo: "F", answer: "facebook", correct: false },
+    { id: 6, logo: "F", answer: "facebookfacebook", correct: false },
     { id: 7, logo: "G", answer: "google", correct: false },
     { id: 8, logo: "H", answer: "hp", correct: false },
     { id: 9, logo: "I", answer: "ikea", correct: false },
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   },
   headerTextL: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: "900",
     color: "#fff",
     flex: 1,
     textAlign: "left",

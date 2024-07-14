@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   },
   headerTextL: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: "900",
     color: "#fff",
     flex: 1,
     textAlign: "left",
