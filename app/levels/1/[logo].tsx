@@ -1,18 +1,24 @@
 import { useLocalSearchParams, Link } from "expo-router";
 import { useRef, useState } from "react";
-import { Text, View, StyleSheet, TextInput, Pressable } from "react-native";
+import { Text, View, StyleSheet, TextInput, Pressable, Image } from "react-native";
+
+const images = {
+  hesburger: require('./images/hesburger.png'),
+  bmw: require('./images/bmw.png'),
+};
 
 export default function Logo() {
   const local = useLocalSearchParams();
   const logo = local.logo;
   const logoArr = (typeof logo === "string" ? logo : "").split("");
   const [text, onChangeText] = useState("");
-  const [keyboard, setKeyboard] = useState(false);
   const inputRef = useRef(null);
+  const image = images[logo as keyof typeof images];
+
 
   const handleTextChange = (newText: string) => {
     if (newText.length <= logoArr.length) {
-      onChangeText(newText); // Update only if within the logo string length
+      onChangeText(newText); 
     }
   };
 
@@ -40,12 +46,19 @@ export default function Logo() {
         <Text style={styles.headerTextR}></Text>
       </View>
       <Text style={styles.text}>{logo}</Text>
+      <Image style={{
+        width: 300,
+        height: 300,
+        margin: "auto",
+      }} source={image}>
+
+      </Image>
       <View>
         <Pressable
           style={{
             marginTop: 200,
           }}
-          onPress={() => (inputRef.current as TextInput | null)?.focus()} // Focus the TextInput when pressed
+          onPress={() => (inputRef.current as TextInput | null)?.focus()}
         >
           <View
             style={{
@@ -127,25 +140,24 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   char: {
-    fontSize: 60,
+    fontSize: 36,
     fontWeight: "300",
     textTransform: "uppercase",
 
     textAlign: "center",
   },
   char2: {
-    fontSize: 68,
+    fontSize: 40,
     fontWeight: "300",
     textTransform: "uppercase",
 
     textAlign: "center",
-    marginTop: -45,
-    marginBottom: -30,
+    marginTop: -20,
   },
   boxtop: {
     flexDirection: "column",
     flexWrap: "wrap",
-    width: 60,
+    width: 40,
     justifyContent: "center",
   },
 });

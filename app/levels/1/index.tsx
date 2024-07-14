@@ -15,7 +15,7 @@ export default function Level1() {
   const [logo, setLogo] = useState("");
 
   const logos = [
-    { id: 1, logo: "A", answer: "ikea", correct: false },
+    { id: 1, logo: "A", answer: "hesburger", correct: false },
     { id: 2, logo: "B", answer: "bmw", correct: false },
     { id: 3, logo: "C", answer: "citroen", correct: false },
     { id: 4, logo: "D", answer: "dhl", correct: false },
