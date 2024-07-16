@@ -7,6 +7,8 @@ const images = {
   bmw: require('./images/bmw.png'),
 };
 
+const logoOrder = ["hesburger", "bmw", "citroen", "dhl", "ebay", "facebook", "google", "hp", "ikea", "jbl", "kia", "lg"];
+
 export default function Logo() {
   const local = useLocalSearchParams();
   const logo = local.logo;
@@ -92,12 +94,21 @@ export default function Logo() {
   
         </Pressable>
         <View style={{flexDirection: "row"}}>
-        <Link href="/levels/1" asChild>
-          <Text style={styles.previous}>←</Text>
-        </Link>
-        <Link href="/levels/1" asChild>
-          <Text style={styles.next}>→</Text>
-        </Link>
+        {logoOrder.indexOf(logo!.toString()) > 0 ? (
+          <Link href={`/levels/1/${logoOrder[logoOrder.indexOf(logo!.toString()) - 1]}`} asChild>
+            <Text style={styles.previous}>←</Text>
+          </Link>
+        ) : (
+          <Text style={{flex: 1}}>&nbsp;</Text>
+        )}
+        <Text style={{flex: 1}}>&nbsp;</Text>
+        {logoOrder.indexOf(logo!.toString()) < logoOrder.length - 1 ? (
+          <Link href={`/levels/1/${logoOrder[logoOrder.indexOf(logo!.toString()) + 1]}`} asChild>
+            <Text style={styles.next}>→</Text>
+          </Link>
+        ) : (
+          <Text style={{flex: 1}}>&nbsp;</Text>
+        )}
         </View>
         <TextInput
           ref={inputRef}
