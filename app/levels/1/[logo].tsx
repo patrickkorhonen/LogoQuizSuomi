@@ -20,6 +20,12 @@ export default function Logo() {
     if (newText.length <= logoArr.length) {
       onChangeText(newText); 
     }
+    if (newText.toLowerCase() === logo!.toString().toLowerCase()) {
+      console.log("oikein")
+    }
+    else if (newText.length === logoArr.length) {
+      console.log("väärin")
+    }
   };
 
   return (
@@ -45,18 +51,17 @@ export default function Logo() {
         <Text style={styles.headerText}></Text>
         <Text style={styles.headerTextR}></Text>
       </View>
-      <Text style={styles.text}>{logo}</Text>
       <Image style={{
-        width: 300,
         height: 300,
-        margin: "auto",
+        width: "70%",
+        objectFit: "contain",
+        marginHorizontal: "auto",
       }} source={image}>
-
       </Image>
       <View>
         <Pressable
           style={{
-            marginTop: 200,
+            marginTop: 0,
           }}
           onPress={() => (inputRef.current as TextInput | null)?.focus()}
         >

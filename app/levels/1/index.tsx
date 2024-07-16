@@ -5,9 +5,14 @@ import {
   StyleSheet,
   ScrollView,
   Pressable,
-  Modal,
+  Image,
 } from "react-native";
 import { useState } from "react";
+
+const images = {
+  hesburger: require('./images/hesburger.png'),
+  bmw: require('./images/bmw.png'),
+};
 
 export default function Level1() {
   const [pressed, setPressed] = useState(0);
@@ -15,10 +20,10 @@ export default function Level1() {
   const [logo, setLogo] = useState("");
 
   const logos = [
-    { id: 1, logo: "A", answer: "hesburger", correct: false },
-    { id: 2, logo: "B", answer: "bmw", correct: false },
-    { id: 3, logo: "C", answer: "citroen", correct: false },
-    { id: 4, logo: "D", answer: "dhl", correct: false },
+    { id: 1, logo: "A", answer: "hesburger", correct: false, image: images.hesburger },
+    { id: 2, logo: "B", answer: "bmw", correct: false, image: images.bmw },
+    { id: 3, logo: "C", answer: "citroen", correct: false, image: images.bmw },
+    { id: 4, logo: "D", answer: "dhl", correct: false, image: images.bmw },
     { id: 5, logo: "E", answer: "ebay", correct: false },
     { id: 6, logo: "F", answer: "facebookfacebook", correct: false },
     { id: 7, logo: "G", answer: "google", correct: false },
@@ -66,7 +71,15 @@ export default function Level1() {
               key={logo.id}
               style={pressed === logo.id ? styles.logoPres : styles.logo}
             >
-              <Text style={styles.text}>{logo.logo}</Text>
+              {logo.image ? (
+                <Image style={{
+                  height: 110,
+                  width: 110,
+                  objectFit: "contain",
+                }} source={logo.image} />
+              ) : (
+                <Text style={styles.text}>{logo.logo}</Text>
+              )}
             </Pressable>
             </Link>
           ))}
@@ -78,17 +91,17 @@ export default function Level1() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#fff",
+    //backgroundColor: "#fff",
   },
   logo: {
-    backgroundColor: "#a3f0a6",
-    padding: 30,
-    margin: 30,
+    //backgroundColor: "#a3f0a6",
+    padding: 0,
+    margin: 10,
   },
   logoPres: {
-    backgroundColor: "#000000",
-    padding: 30,
-    margin: 30,
+    opacity: 0.5,
+    padding: 0,
+    margin: 10,
   },
   text: {
     fontSize: 24,
