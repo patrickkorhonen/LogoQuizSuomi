@@ -24,14 +24,14 @@ export default function Level1() {
     { id: 2, logo: "B", answer: "bmw", correct: false, image: images.bmw },
     { id: 3, logo: "C", answer: "citroen", correct: false, image: images.bmw },
     { id: 4, logo: "D", answer: "dhl", correct: false, image: images.bmw },
-    { id: 5, logo: "E", answer: "ebay", correct: false },
-    { id: 6, logo: "F", answer: "facebookfacebook", correct: false },
-    { id: 7, logo: "G", answer: "google", correct: false },
-    { id: 8, logo: "H", answer: "hp", correct: false },
-    { id: 9, logo: "I", answer: "ikea", correct: false },
-    { id: 10, logo: "J", answer: "jbl", correct: false },
-    { id: 11, logo: "K", answer: "kia", correct: false },
-    { id: 12, logo: "L", answer: "lg", correct: false },
+    { id: 5, logo: "E", answer: "ebay", correct: false, image: images.bmw  },
+    { id: 6, logo: "F", answer: "facebookfacebook", correct: false, image: images.bmw  },
+    { id: 7, logo: "G", answer: "google", correct: false, image: images.bmw  },
+    { id: 8, logo: "H", answer: "hp", correct: false, image: images.bmw  },
+    { id: 9, logo: "I", answer: "ikea", correct: false, image: images.bmw  },
+    { id: 10, logo: "J", answer: "jbl", correct: false, image: images.bmw  },
+    { id: 11, logo: "K", answer: "kia", correct: false, image: images.bmw  },
+    { id: 12, logo: "L", answer: "lg", correct: false, image: images.bmw  },
   ];
 
   return (
@@ -42,7 +42,7 @@ export default function Level1() {
           height: 120,
           paddingBottom: 24,
           shadowColor: "#000",
-          shadowOffset: { width: 0, height: 2 },
+          shadowOffset: { width: 0, height: 1 },
           shadowOpacity: 0.25,
           shadowRadius: 3.84,
           elevation: 5,
@@ -73,8 +73,8 @@ export default function Level1() {
             >
               {logo.image ? (
                 <Image style={{
-                  height: 110,
-                  width: 110,
+                  height: 120,
+                  width: 120,
                   objectFit: "contain",
                 }} source={logo.image} />
               ) : (
@@ -96,12 +96,13 @@ const styles = StyleSheet.create({
   logo: {
     //backgroundColor: "#a3f0a6",
     padding: 0,
-    margin: 10,
+    marginVertical: 10,
+
   },
   logoPres: {
     opacity: 0.5,
     padding: 0,
-    margin: 10,
+    margin: 0,
   },
   text: {
     fontSize: 24,
@@ -114,7 +115,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignContent: "center",
     marginTop: 30,
-    marginBottom: 180,
+    marginBottom: 10,
   },
   headerTextL: {
     fontSize: 20,

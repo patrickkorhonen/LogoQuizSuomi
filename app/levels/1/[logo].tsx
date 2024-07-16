@@ -36,7 +36,7 @@ export default function Logo() {
           height: 120,
           paddingBottom: 24,
           shadowColor: "#000",
-          shadowOffset: { width: 0, height: 2 },
+          shadowOffset: { width: 0, height: 1 },
           shadowOpacity: 0.25,
           shadowRadius: 3.84,
           elevation: 5,
@@ -51,6 +51,7 @@ export default function Logo() {
         <Text style={styles.headerText}></Text>
         <Text style={styles.headerTextR}></Text>
       </View>
+      <View style={{padding: 20}}>
       <Image style={{
         height: 300,
         width: "70%",
@@ -90,7 +91,14 @@ export default function Logo() {
             </View>
   
         </Pressable>
-
+        <View style={{flexDirection: "row"}}>
+        <Link href="/levels/1" asChild>
+          <Text style={styles.previous}>←</Text>
+        </Link>
+        <Link href="/levels/1" asChild>
+          <Text style={styles.next}>→</Text>
+        </Link>
+        </View>
         <TextInput
           ref={inputRef}
           style={{ opacity: 0, height: 0, width: 0 }}
@@ -98,6 +106,7 @@ export default function Logo() {
           value={text}
         />
       </View>
+    </View>
     </View>
   );
 }
@@ -165,4 +174,18 @@ const styles = StyleSheet.create({
     width: 40,
     justifyContent: "center",
   },
+  previous: {
+    fontSize: 40,
+    fontWeight: "bold",
+    flex: 1,
+    textAlign: "left",
+    padding: 6,
+  },
+  next: {
+    fontSize: 40,
+    fontWeight: "bold",
+    flex: 1,
+    textAlign: "right",
+    padding: 6,
+  }
 });
