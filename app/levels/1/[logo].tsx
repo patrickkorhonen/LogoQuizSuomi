@@ -31,6 +31,8 @@ export default function Logo() {
       onChangeText(newText); 
     }
     if (newText.toLowerCase() === logo!.toString().toLowerCase()) {
+      setCorrect(true),
+      (inputRef.current as TextInput | null)?.blur()
       console.log("oikein")
     }
     else if (newText.length === logoArr.length) {
@@ -39,7 +41,7 @@ export default function Logo() {
   };
 
   return (
-    <View>
+    <View style={{height: "100%", flexDirection: "column"}}>
       <View
         style={{
           backgroundColor: "#63b5d6",
@@ -61,7 +63,7 @@ export default function Logo() {
         <Text style={styles.headerText}></Text>
         <Text style={styles.headerTextR}></Text>
       </View>
-      <View style={{padding: 20}}>
+      <View style={{padding: 20, flexGrow: 1}}>
       <Image style={{
         height: 300,
         width: "70%",
@@ -125,6 +127,26 @@ export default function Logo() {
           value={text}
         />
       </View>
+      {correct && (
+        <View style={{
+          backgroundColor: "#39963c",
+          width: "100%",
+          padding: 20,
+          margin: 40,
+          marginHorizontal: "auto",
+          borderRadius: 10,
+          flexGrow: 1,
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 1 },
+          shadowOpacity: 0.25,
+          shadowRadius: 3.84,
+          elevation: 5,
+        }}>
+          <Text style={{fontSize: 30, fontWeight: "700", color: "white", textAlign: "center"}}>OIKEIN</Text>
+          <Image style={{objectFit: "contain", margin: "auto", width: 60, height: 60}} source={require("../images/correct.png")}></Image>
+
+        </View>
+      )}
     </View>
     </View>
   );
