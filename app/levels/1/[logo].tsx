@@ -1,5 +1,5 @@
 import { useLocalSearchParams, Link } from "expo-router";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Text, View, StyleSheet, TextInput, Pressable, Image } from "react-native";
 
 const images = {
@@ -16,9 +16,17 @@ export default function Logo() {
   const [text, onChangeText] = useState("");
   const inputRef = useRef(null);
   const image = images[logo as keyof typeof images];
+  const [correct, setCorrect] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => (inputRef.current as TextInput | null)?.focus(), 520)
+  }, []);
 
 
   const handleTextChange = (newText: string) => {
+    if (newText.trim() === text) {
+      return;
+    }
     if (newText.length <= logoArr.length) {
       onChangeText(newText); 
     }
@@ -111,7 +119,7 @@ export default function Logo() {
         )}
         </View>
         <TextInput
-          ref={inputRef}
+          ref={inputRef}  
           style={{ opacity: 0, height: 0, width: 0 }}
           onChangeText={handleTextChange}
           value={text}
