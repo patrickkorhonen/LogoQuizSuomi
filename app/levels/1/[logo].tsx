@@ -8,7 +8,7 @@ const images = {
   bmw: require('./images/bmw.png'),
 };
 
-const logoOrder = ["hesburger", "bmw", "citroen", "dhl", "ebay", "facebook", "google", "hp", "ikea", "jbl", "kia", "lg"];
+const logoOrder = ["hesburger", "bmw", "citroen", "dhl", "ebay", "facebookfacebook"];
 
 export default function Logo() {
   const local = useLocalSearchParams();

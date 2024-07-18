@@ -72,7 +72,7 @@ export default function Level1() {
         <View style={styles.logosContainer}>
 
           {logos.map((logo) => (
-            <Link key={logo.id} href={`levels/1/${logo.answer}`} asChild>
+            <Link replace key={logo.id} href={`levels/1/${logo.answer}`} asChild>
             <Pressable
               onPressIn={() => setPressed(logo.id)}
               onPressOut={() => setPressed(0)}
