@@ -72,7 +72,7 @@ useEffect(() => {
           alignItems: "flex-end",
         }}
       >
-        <Link href="/levels/1" asChild>
+        <Link replace href="/levels/1" asChild>
           <Text style={styles.headerTextL}>←</Text>
         </Link>
         <Text style={styles.headerText}></Text>
