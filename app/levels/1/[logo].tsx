@@ -1,6 +1,7 @@
 import { useLocalSearchParams, Link } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { Text, View, StyleSheet, TextInput, Pressable, Image } from "react-native";
+import { setItem, getItem } from "@/app/Storage/storage";
 
 const images = {
   hesburger: require('./images/hesburger.png'),
@@ -17,10 +18,23 @@ export default function Logo() {
   const inputRef = useRef(null);
   const image = images[logo as keyof typeof images];
   const [correct, setCorrect] = useState(false);
-
+/*
   useEffect(() => {
-    setTimeout(() => (inputRef.current as TextInput | null)?.focus(), 520)
+    setTimeout(() => (inputRef.current as TextInput | null)?.focus(), 530)
   }, []);
+*/
+useEffect(() => {
+  const fetchData = async ()=> {
+  const data = await getItem(`${logo!.toString()}`)
+  if (data === "true") {
+    setCorrect(true)
+    onChangeText(`${logo!.toString()}`)
+  } else {
+    setTimeout(() => (inputRef.current as TextInput | null)?.focus(), 530)
+  }
+}
+  fetchData()
+}, [])
 
 
   const handleTextChange = (newText: string) => {
@@ -34,6 +48,7 @@ export default function Logo() {
       setCorrect(true),
       (inputRef.current as TextInput | null)?.blur()
       console.log("oikein")
+      setItem(`${logo!.toString()}`, "true")
     }
     else if (newText.length === logoArr.length) {
       console.log("väärin")
@@ -76,7 +91,7 @@ export default function Logo() {
           style={{
             marginTop: 0,
           }}
-          onPress={() => (inputRef.current as TextInput | null)?.focus()}
+          onPress={() => !correct ? (inputRef.current as TextInput | null)?.focus() : null}
         >
           <View
             style={{
@@ -105,7 +120,7 @@ export default function Logo() {
         </Pressable>
         <View style={{flexDirection: "row"}}>
         {logoOrder.indexOf(logo!.toString()) > 0 ? (
-          <Link href={`/levels/1/${logoOrder[logoOrder.indexOf(logo!.toString()) - 1]}`} asChild>
+          <Link replace href={`/levels/1/${logoOrder[logoOrder.indexOf(logo!.toString()) - 1]}`} asChild>
             <Text style={styles.previous}>←</Text>
           </Link>
         ) : (
@@ -113,7 +128,7 @@ export default function Logo() {
         )}
         <Text style={{flex: 1}}>&nbsp;</Text>
         {logoOrder.indexOf(logo!.toString()) < logoOrder.length - 1 ? (
-          <Link href={`/levels/1/${logoOrder[logoOrder.indexOf(logo!.toString()) + 1]}`} asChild>
+          <Link replace href={`/levels/1/${logoOrder[logoOrder.indexOf(logo!.toString()) + 1]}`} asChild>
             <Text style={styles.next}>→</Text>
           </Link>
         ) : (
@@ -221,6 +236,7 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: "left",
     padding: 6,
+    
   },
   next: {
     fontSize: 40,

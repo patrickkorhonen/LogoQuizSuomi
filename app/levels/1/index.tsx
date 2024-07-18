@@ -7,32 +7,52 @@ import {
   Pressable,
   Image,
 } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { setItem, getItem } from "@/app/Storage/storage";
+import { opacity } from "react-native-reanimated/lib/typescript/reanimated2/Colors";
 
 const images = {
   hesburger: require('./images/hesburger.png'),
   bmw: require('./images/bmw.png'),
 };
 
+const logos = [
+  { id: 1, logo: "A", answer: "hesburger", image: images.hesburger},
+  { id: 2, logo: "B", answer: "bmw", image: images.bmw },
+  { id: 3, logo: "C", answer: "citroen", image: images.bmw },
+  { id: 4, logo: "D", answer: "dhl", image: images.bmw },
+  { id: 5, logo: "E", answer: "ebay", image: images.bmw  },
+  { id: 6, logo: "F", answer: "facebookfacebook", image: images.bmw  },
+  { id: 7, logo: "G", answer: "google", image: images.bmw  },
+  { id: 8, logo: "H", answer: "hp", image: images.bmw  },
+  { id: 9, logo: "I", answer: "ikea", image: images.bmw  },
+  { id: 10, logo: "J", answer: "jbl", image: images.bmw  },
+  { id: 11, logo: "K", answer: "kia", image: images.bmw  },
+  { id: 12, logo: "L", answer: "lg", image: images.bmw  },
+];
+let logoC: any = {}
+
 export default function Level1() {
   const [pressed, setPressed] = useState(0);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [logo, setLogo] = useState("");
 
-  const logos = [
-    { id: 1, logo: "A", answer: "hesburger", correct: false, image: images.hesburger },
-    { id: 2, logo: "B", answer: "bmw", correct: false, image: images.bmw },
-    { id: 3, logo: "C", answer: "citroen", correct: false, image: images.bmw },
-    { id: 4, logo: "D", answer: "dhl", correct: false, image: images.bmw },
-    { id: 5, logo: "E", answer: "ebay", correct: false, image: images.bmw  },
-    { id: 6, logo: "F", answer: "facebookfacebook", correct: false, image: images.bmw  },
-    { id: 7, logo: "G", answer: "google", correct: false, image: images.bmw  },
-    { id: 8, logo: "H", answer: "hp", correct: false, image: images.bmw  },
-    { id: 9, logo: "I", answer: "ikea", correct: false, image: images.bmw  },
-    { id: 10, logo: "J", answer: "jbl", correct: false, image: images.bmw  },
-    { id: 11, logo: "K", answer: "kia", correct: false, image: images.bmw  },
-    { id: 12, logo: "L", answer: "lg", correct: false, image: images.bmw  },
-  ];
+  
+
+  useEffect(() => {
+    
+    const fetchData = async () => {
+    
+    logos.forEach(async (logo) => {
+      const data = await getItem(`${logo.answer}`)
+      logoC[logo.answer] = data
+    })
+  }
+    fetchData()
+  }, [])
+  
+
+  
+  
+  
 
   return (
     <View style={styles.container}>
@@ -64,12 +84,8 @@ export default function Level1() {
             <Pressable
               onPressIn={() => setPressed(logo.id)}
               onPressOut={() => setPressed(0)}
-              onPress={() => {
-                setLogo(logo.answer);
-                setModalVisible(true);
-              }}
               key={logo.id}
-              style={pressed === logo.id ? styles.logoPres : styles.logo}
+              style={pressed === logo.id ? styles.logoPres : logoC[logo.answer] ? { ...styles.logo, opacity: 0.5 } : styles.logo}
             >
               {logo.image ? (
                 <Image style={{
@@ -97,7 +113,6 @@ const styles = StyleSheet.create({
     //backgroundColor: "#a3f0a6",
     padding: 0,
     marginVertical: 10,
-
   },
   logoPres: {
     opacity: 0.5,
