@@ -9,7 +9,7 @@ import {
   ImageBackground,
 } from "react-native";
 import { useEffect, useState } from "react";
-import { getItem, clear } from "@/app/Storage/storage";
+import { getItem, clear, getLevelGuessed } from "@/app/Storage/storage";
 
 const images = {
   hesburger: require("./images/hesburger.png"),

@@ -20,6 +20,33 @@ export const setItem = async (key: string, value: string) => {
     }
   };
 
+  export const getLevelGuessed = async (level: string) => {
+    try {
+      const value = await AsyncStorage.getItem(level);
+      //console.log(value)
+      return value != null ? JSON.parse(value) : null;
+    } catch (error) {
+      console.error('Error getting item:', error);
+      return null;
+    }
+  }
+
+  export const setlevelGuessed = async (level: string) => {
+    try {
+      await getLevelGuessed(level).then((data) => {
+        if (data) {
+          AsyncStorage.setItem(level, (Number(data) + 1).toString());
+        } else {
+          AsyncStorage.setItem(level, "1");
+        }
+      })
+      
+    } catch (error) {
+      console.error('Error setting item:', error);
+    }
+  
+  }
+
   export const clear = async () => {
     try {
       await AsyncStorage.clear();

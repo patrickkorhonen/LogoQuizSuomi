@@ -1,7 +1,7 @@
 import { useLocalSearchParams, Link } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { Text, View, StyleSheet, TextInput, Pressable, Image } from "react-native";
-import { setItem, getItem } from "@/app/Storage/storage";
+import { setItem, getItem, setlevelGuessed } from "@/app/Storage/storage";
 
 const images = {
   hesburger: require('./images/hesburger.png'),
@@ -51,6 +51,7 @@ useEffect(() => {
       (inputRef.current as TextInput | null)?.blur()
       console.log("oikein")
       setItem(`${logo!.toString()}`, "true")
+      setlevelGuessed("1")
     }
     else if (newText.length === logoArr.length) {
       console.log("väärin")
