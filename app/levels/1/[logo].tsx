@@ -5,6 +5,7 @@ import { setItem, getItem } from "@/app/Storage/storage";
 
 const images = {
   hesburger: require('./images/hesburger.png'),
+  hesburgerC: require('./images/hesburgerC.png'),
   bmw: require('./images/bmw.png'),
 };
 
@@ -17,6 +18,7 @@ export default function Logo() {
   const [text, onChangeText] = useState("");
   const inputRef = useRef(null);
   const image = images[logo as keyof typeof images];
+  const fullImage = images[`${logo}C` as keyof typeof images];
   const [correct, setCorrect] = useState(false);
 /*
   useEffect(() => {
@@ -61,7 +63,7 @@ useEffect(() => {
         style={{
           backgroundColor: "#63b5d6",
           height: 120,
-          paddingBottom: 24,
+          paddingBottom: 20,
           shadowColor: "#000",
           shadowOffset: { width: 0, height: 1 },
           shadowOpacity: 0.25,
@@ -79,13 +81,14 @@ useEffect(() => {
         <Text style={styles.headerTextR}></Text>
       </View>
       <View style={{padding: 20, flexGrow: 1}}>
-      <Image style={{
-        height: 300,
-        width: "70%",
-        objectFit: "contain",
-        marginHorizontal: "auto",
-      }} source={image}>
-      </Image>
+        {correct ? (
+          <Image style={styles.image} source={fullImage}>
+          </Image>
+        ) : (
+          <Image style={styles.image} source={image}>
+          </Image>
+        )}
+      
       <View>
         <Pressable
           style={{
@@ -146,7 +149,7 @@ useEffect(() => {
         <View style={{
           backgroundColor: "#39963c",
           width: "100%",
-          padding: 20,
+          padding: 24,
           margin: 40,
           marginHorizontal: "auto",
           borderRadius: 10,
@@ -158,8 +161,14 @@ useEffect(() => {
           elevation: 5,
         }}>
           <Text style={{fontSize: 30, fontWeight: "700", color: "white", textAlign: "center"}}>OIKEIN</Text>
-          <Image style={{objectFit: "contain", margin: "auto", width: 60, height: 60}} source={require("../images/correct.png")}></Image>
-
+          <Image style={{objectFit: "contain", margin: "auto", width: 50, height: 50}} source={require("../images/correct.png")}></Image>
+          <Pressable>
+            <View style={{backgroundColor: "white", padding: 10, borderRadius: 10, marginHorizontal: "auto"}}>
+            <Link replace href="/levels/1" asChild>
+              <Text style={{fontSize: 20, fontWeight: "bold", color: "#39963c", textAlign: "center", margin: "auto"}}>&nbsp;Sulje&nbsp;</Text>
+            </Link>
+            </View>
+          </Pressable>
         </View>
       )}
     </View>
@@ -182,12 +191,12 @@ const styles = StyleSheet.create({
     margin: 30,
   },
   text: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: "bold",
     marginBottom: "auto",
   },
   headerTextL: {
-    fontSize: 20,
+    fontSize: 26,
     fontWeight: "900",
     color: "#fff",
     flex: 1,
@@ -244,5 +253,11 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: "right",
     padding: 6,
+  },
+  image: {
+    height: 300,
+    width: "80%",
+    objectFit: "contain",
+    marginHorizontal: "auto",
   }
 });

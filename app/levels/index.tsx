@@ -19,7 +19,7 @@ export default function Levels() {
         style={{
           backgroundColor: "#63b5d6",
           height: 120,
-          paddingBottom: 24,
+          paddingBottom: 20,
           shadowColor: "#000",
           shadowOffset: { width: 0, height: 1 },
           shadowOpacity: 0.25,
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   headerTextL: {
-    fontSize: 20,
+    fontSize: 26,
     fontWeight: "900",
     color: "#fff",
     flex: 1,
@@ -144,5 +144,6 @@ const styles = StyleSheet.create({
     color: "#fff",
     flex: 1,
     textAlign: "center",
+    marginBottom: 4,
   },
 });
