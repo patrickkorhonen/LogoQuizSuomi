@@ -1,17 +1,41 @@
 import { Link } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Text, View, StyleSheet, ScrollView, Pressable } from "react-native";
+import { getLevelGuessed } from "../Storage/storage";
 
 export default function Levels() {
   const [pressed, setPressed] = useState(0);
+  const [progress, setProgress] = useState<string[]>([]);
 
   const levels = [
-    { id: 1, title: "Taso 1", progress: "0/12" },
-    { id: 2, title: "Taso 2", progress: "3/12" },
-    { id: 3, title: "Taso 3", progress: "6/12" },
-    { id: 4, title: "Taso 4", progress: "9/12" },
-    { id: 5, title: "Taso 5", progress: "12/12" },
+    { id: 1, title: "Taso 1" },
+    { id: 2, title: "Taso 2" },
+    { id: 3, title: "Taso 3" },
+    { id: 4, title: "Taso 4" },
+    { id: 5, title: "Taso 5" },
   ];
+
+  useEffect(() => {
+    const fetchData = async () => {
+      levels.map(async (level) => {
+        await getLevelGuessed(`${level.id}`).then((data) => {
+          if (data) {
+            const prevArray = progress;
+            prevArray.push(data);
+            setProgress([...prevArray]);
+            
+          } else {
+            const prevArray = progress;
+            prevArray.push("0");
+            setProgress([...prevArray]);
+          }
+        });
+      });
+    };
+    fetchData();
+  }, []);
+
+  
 
   return (
     <View style={styles.container}>
@@ -57,8 +81,18 @@ export default function Levels() {
                 style={pressed === level.id ? styles.levelPres : styles.level}
               >
                 <Text style={styles.text}>{level.title}</Text>
-                <View style={styles.progressbar}></View>
-                <Text style={styles.textsm}>{level.progress}</Text>
+                <Text style={styles.textsm}>{((Number(progress[level.id - 1]) / 12) * 100).toFixed(1)}%</Text>
+                <View style={styles.progressbar}>
+                  <View
+                    style={{
+                      backgroundColor: "#ab4418",
+                      height: 6,
+                      width: `${(Number(progress[level.id - 1]) / 12) * 100}%`,
+                      borderRadius: 10,
+                    }}
+                  ></View>
+                </View>
+                <Text style={styles.textsm}>{progress[level.id - 1]}/12</Text>
               </Pressable>
             </Link>
           ))}
@@ -107,7 +141,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: "auto",
+    marginBottom: 20,
   },
   textsm: {
     color: "#fff",
@@ -118,7 +152,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     height: 6,
     width: "100%",
-    margin: 10,
+    margin: 6,
     borderRadius: 10,
     flexDirection: "row",
   },

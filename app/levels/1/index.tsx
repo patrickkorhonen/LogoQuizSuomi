@@ -23,6 +23,7 @@ const logos = [
   { id: 4, answer: "dhl", image: images.bmw },
   { id: 5, answer: "ebay", image: images.bmw },
   { id: 6, answer: "facebookfacebook", image: images.bmw },
+  { id: 7, answer: "abc def", image: images.bmw },
 ];
 
 export default function Level1() {
@@ -63,10 +64,10 @@ export default function Level1() {
           alignItems: "flex-end",
         }}
       >
-        <Link href="/levels" asChild>
+        <Link replace href="/levels" asChild>
           <Text style={styles.headerTextL}>←</Text>
         </Link>
-        <Text style={styles.headerText}>Valitse taso</Text>
+        <Text style={styles.headerText}>Taso 1</Text>
         <Text style={styles.headerTextR}></Text>
       </View>
 

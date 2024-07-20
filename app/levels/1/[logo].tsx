@@ -9,7 +9,7 @@ const images = {
   bmw: require('./images/bmw.png'),
 };
 
-const logoOrder = ["hesburger", "bmw", "citroen", "dhl", "ebay", "facebookfacebook"];
+const logoOrder = ["hesburger", "bmw", "citroen", "dhl", "ebay", "facebookfacebook", "abc def"];
 
 export default function Logo() {
   const local = useLocalSearchParams();
@@ -44,7 +44,11 @@ useEffect(() => {
       return;
     }
     if (newText.length <= logoArr.length) {
-      onChangeText(newText); 
+      if (logoArr[newText.length] === " ") {
+        onChangeText(newText + " ");
+      } else {
+      onChangeText(newText);
+      } 
     }
     if (newText.toLowerCase() === logo!.toString().toLowerCase()) {
       setCorrect(true),
@@ -106,10 +110,15 @@ useEffect(() => {
           >
             {logoArr.map((letter, index) => (
                 <View key={index}>
-                  {text[index] != undefined ? (
+                  {text[index] != undefined && letter != " " ? (
                     <View style={styles.boxtop} >
                     <Text style={styles.char}>{text[index]}</Text>
                     <Text style={styles.char2}>—</Text>
+                    </View>
+                  ) : letter === " " ? (
+                    <View style={styles.boxtop} >
+                    <Text style={styles.char}>&nbsp;</Text>
+                    <Text style={styles.char2}>&nbsp;</Text>
                     </View>
                   ) : (
                     <View style={styles.boxtop} >
@@ -221,7 +230,7 @@ const styles = StyleSheet.create({
   },
   char: {
     fontSize: 36,
-    fontWeight: "300",
+    fontWeight: "400",
     textTransform: "uppercase",
 
     textAlign: "center",
