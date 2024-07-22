@@ -1,36 +1,56 @@
 import { useLocalSearchParams, Link } from "expo-router";
 import { useEffect, useRef, useState } from "react";
-import { Text, View, StyleSheet, TextInput, Pressable, Image } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  TextInput,
+  Pressable,
+  Image,
+} from "react-native";
 import { setItem, getItem, setlevelGuessed } from "@/app/Storage/storage";
 
 const images = {
-  hesburger: require('./images/hesburger.png'),
-  hesburgerC: require('./images/hesburgerC.png'),
-  fazer: require('./images/fazer.png'),
-  fazerC: require('./images/fazerC.png'),
-  finnair: require('./images/finnair.png'),
-  finnairC: require('./images/finnairC.png'),
-  prisma: require('./images/prisma.png'),
-  prismaC: require('./images/prismaC.png'),
-  mtv3: require('./images/mtv3.png'),
-  mtv3C: require('./images/mtv3C.png'),
-  fiskars: require('./images/fiskars.png'),
-  fiskarsC: require('./images/fiskarsC.png'),
-  taffel: require('./images/taffel.png'),
-  taffelC: require('./images/taffelC.png'),
-  finnkino: require('./images/finnkino.png'),
-  finnkinoC: require('./images/finnkinoC.png'),
-  panda: require('./images/panda.png'),
-  pandaC: require('./images/pandaC.png'),
-  valio: require('./images/valio.png'),
-  valioC: require('./images/valioC.png'),
-  dna: require('./images/dna.png'),
-  dnaC: require('./images/dnaC.png'),
-  neste: require('./images/neste.png'),
-  nesteC: require('./images/nesteC.png'),
+  hesburger: require("./images/hesburger.png"),
+  hesburgerC: require("./images/hesburgerC.png"),
+  fazer: require("./images/fazer.png"),
+  fazerC: require("./images/fazerC.png"),
+  finnair: require("./images/finnair.png"),
+  finnairC: require("./images/finnairC.png"),
+  prisma: require("./images/prisma.png"),
+  prismaC: require("./images/prismaC.png"),
+  mtv3: require("./images/mtv3.png"),
+  mtv3C: require("./images/mtv3C.png"),
+  fiskars: require("./images/fiskars.png"),
+  fiskarsC: require("./images/fiskarsC.png"),
+  taffel: require("./images/taffel.png"),
+  taffelC: require("./images/taffelC.png"),
+  finnkino: require("./images/finnkino.png"),
+  finnkinoC: require("./images/finnkinoC.png"),
+  panda: require("./images/panda.png"),
+  pandaC: require("./images/pandaC.png"),
+  valio: require("./images/valio.png"),
+  valioC: require("./images/valioC.png"),
+  dna: require("./images/dna.png"),
+  dnaC: require("./images/dnaC.png"),
+  neste: require("./images/neste.png"),
+  nesteC: require("./images/nesteC.png"),
 };
 
-const logoOrder = ["hesburger", "fazer", "finnair", "prisma", "mtv3", "fiskars", "taffel", "finnkino", "panda", "valio", "dna", "neste"];
+const logoOrder = [
+  "hesburger",
+  "fazer",
+  "finnair",
+  "prisma",
+  "mtv3",
+  "fiskars",
+  "taffel",
+  "finnkino",
+  "panda",
+  "valio",
+  "dna",
+  "neste",
+];
 
 export default function Logo() {
   const local = useLocalSearchParams();
@@ -41,20 +61,21 @@ export default function Logo() {
   const image = images[logo as keyof typeof images];
   const fullImage = images[`${logo}C` as keyof typeof images];
   const [correct, setCorrect] = useState(false);
+  const [hintCpressed, setHintCpressed] = useState(false);
+  const [hintWpressed, setHintWpressed] = useState(false);
 
-useEffect(() => {
-  const fetchData = async ()=> {
-  const data = await getItem(`${logo!.toString()}`)
-  if (data === "true") {
-    setCorrect(true)
-    onChangeText(`${logo!.toString()}`)
-  } else {
-    setTimeout(() => (inputRef.current as TextInput | null)?.focus(), 530)
-  }
-}
-  fetchData()
-}, [])
-
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getItem(`${logo!.toString()}`);
+      if (data === "true") {
+        setCorrect(true);
+        onChangeText(`${logo!.toString()}`);
+      } else {
+        setTimeout(() => (inputRef.current as TextInput | null)?.focus(), 530);
+      }
+    };
+    fetchData();
+  }, []);
 
   const handleTextChange = (newText: string) => {
     if (newText.length < text.length && newText === text.trim()) {
@@ -62,28 +83,26 @@ useEffect(() => {
     } else if (newText.trim() === text) {
       return;
     } else {
-    if (newText.length <= logoArr.length) {
-      if (logoArr[newText.length] === " ") {
-        onChangeText(newText + " ");
-      } else {
-      onChangeText(newText);
-      } 
+      if (newText.length <= logoArr.length) {
+        if (logoArr[newText.length] === " ") {
+          onChangeText(newText + " ");
+        } else {
+          onChangeText(newText);
+        }
+      }
+      if (newText.toLowerCase() === logo!.toString().toLowerCase()) {
+        setCorrect(true), (inputRef.current as TextInput | null)?.blur();
+        console.log("oikein");
+        setItem(`${logo!.toString()}`, "true");
+        setlevelGuessed("1");
+      } else if (newText.length === logoArr.length) {
+        console.log("väärin");
+      }
     }
-    if (newText.toLowerCase() === logo!.toString().toLowerCase()) {
-      setCorrect(true),
-      (inputRef.current as TextInput | null)?.blur()
-      console.log("oikein")
-      setItem(`${logo!.toString()}`, "true")
-      setlevelGuessed("1")
-    }
-    else if (newText.length === logoArr.length) {
-      console.log("väärin")
-    }
-  }
   };
 
   return (
-    <View style={{height: "100%", flexDirection: "column"}}>
+    <View style={{ height: "100%", flexDirection: "column" }}>
       <View
         style={{
           backgroundColor: "#63b5d6",
@@ -97,7 +116,7 @@ useEffect(() => {
           flexDirection: "row",
           //justifyContent: "center",
           alignItems: "flex-end",
-          marginBottom: 16,
+          marginBottom: 0,
         }}
       >
         <Link replace href="/levels/1" asChild>
@@ -106,104 +125,194 @@ useEffect(() => {
         <Text style={styles.headerText}></Text>
         <Text style={styles.headerTextR}></Text>
       </View>
-      <View style={{padding: 20, flexGrow: 1}}>
+      <View style={{ padding: 20, flexGrow: 1 }}>
         {correct ? (
-          <Image style={styles.image} source={fullImage}>
-          </Image>
+          <Image style={styles.image} source={fullImage}></Image>
         ) : (
-          <Image style={styles.image} source={image}>
-          </Image>
+          <Image style={styles.image} source={image}></Image>
         )}
-      
-      <View>
-        <Pressable
-          style={{
-            marginTop: 0,
-          }}
-          onPress={() => !correct ? (inputRef.current as TextInput | null)?.focus() : null}
-        >
-          <View
+
+        <View>
+          <Pressable
             style={{
-              flexDirection: "row",
-              justifyContent: "center",
-              flexWrap: "wrap",
-              marginTop: 30,
+              marginTop: 0,
+              marginBottom: 10,
             }}
+            onPress={() =>
+              !correct ? (inputRef.current as TextInput | null)?.focus() : null
+            }
           >
-            {logoArr.map((letter, index) => (
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                flexWrap: "wrap",
+                marginTop: 30,
+              }}
+            >
+              {logoArr.map((letter, index) => (
                 <View key={index}>
                   {text[index] != undefined && letter != " " ? (
-                    <View style={styles.boxtop} >
-                    <Text style={styles.char}>{text[index]}</Text>
-                    <Text style={styles.char2}>—</Text>
+                    <View style={styles.boxtop}>
+                      <Text style={styles.char}>{text[index]}</Text>
+                      <Text style={styles.char2}>—</Text>
                     </View>
                   ) : letter === " " ? (
-                    <View style={styles.boxtop} >
-                    <Text style={styles.char}>&nbsp;</Text>
-                    <Text style={styles.char2}>&nbsp;</Text>
+                    <View style={styles.boxtop}>
+                      <Text style={styles.char}>&nbsp;</Text>
+                      <Text style={styles.char2}>&nbsp;</Text>
                     </View>
                   ) : (
-                    <View style={styles.boxtop} >
-                    <Text style={styles.char}>&nbsp;</Text>
-                    <Text style={styles.char2}>—</Text>
+                    <View style={styles.boxtop}>
+                      <Text style={styles.char}>&nbsp;</Text>
+                      <Text style={styles.char2}>—</Text>
                     </View>
                   )}
                 </View>
-            ))}
-            </View>
-  
-        </Pressable>
-        <View style={{flexDirection: "row"}}>
-        {logoOrder.indexOf(logo!.toString()) > 0 ? (
-          <Link replace href={`/levels/1/${logoOrder[logoOrder.indexOf(logo!.toString()) - 1]}`} asChild>
-            <Text style={styles.previous}>←</Text>
-          </Link>
-        ) : (
-          <Text style={{flex: 1}}>&nbsp;</Text>
-        )}
-        <Text style={{flex: 1}}>&nbsp;</Text>
-        {logoOrder.indexOf(logo!.toString()) < logoOrder.length - 1 ? (
-          <Link replace href={`/levels/1/${logoOrder[logoOrder.indexOf(logo!.toString()) + 1]}`} asChild>
-            <Text style={styles.next}>→</Text>
-          </Link>
-        ) : (
-          <Text style={{flex: 1}}>&nbsp;</Text>
-        )}
-        </View>
-        <TextInput
-          ref={inputRef}  
-          style={{ opacity: 0, height: 0, width: 0 }}
-          onChangeText={handleTextChange}
-          value={text}
-        />
-      </View>
-      {correct && (
-        <View style={{
-          backgroundColor: "#39963c",
-          width: "100%",
-          padding: 24,
-          margin: 10,
-          marginHorizontal: "auto",
-          borderRadius: 10,
-          flexGrow: 1,
-          shadowColor: "#000",
-          shadowOffset: { width: 0, height: 1 },
-          shadowOpacity: 0.25,
-          shadowRadius: 3.84,
-          elevation: 5,
-        }}>
-          <Text style={{fontSize: 30, fontWeight: "700", color: "white", textAlign: "center"}}>OIKEIN</Text>
-          <Image style={{objectFit: "contain", margin: "auto", width: 50, height: 50}} source={require("../images/correct.png")}></Image>
-          <Pressable>
-            <View style={{backgroundColor: "white", padding: 10, borderRadius: 10, marginHorizontal: "auto"}}>
-            <Link replace href="/levels/1" asChild>
-              <Text style={{fontSize: 20, fontWeight: "bold", color: "#39963c", textAlign: "center", margin: "auto"}}>&nbsp;Sulje&nbsp;</Text>
-            </Link>
+              ))}
             </View>
           </Pressable>
+          <View style={{ flexDirection: "row" }}>
+            {logoOrder.indexOf(logo!.toString()) > 0 ? (
+              <View style={{ flex: 1 }}>
+                <Link
+                  replace
+                  href={`/levels/1/${
+                    logoOrder[logoOrder.indexOf(logo!.toString()) - 1]
+                  }`}
+                  asChild
+                >
+                  <Text style={styles.previous}>←</Text>
+                </Link>
+              </View>
+            ) : (
+              <Text style={{ flex: 1 }}>&nbsp;</Text>
+            )}
+            
+              {!correct && (
+                <View style={{flexDirection: "row", flex: 2}}>
+                <Pressable
+                onPressIn={() => setHintCpressed(true)}
+                onPressOut={() => setHintCpressed(false)}
+                style={hintCpressed ? styles.hintPressed : styles.hint}
+              >
+                <Text
+                  style={{
+                    fontSize: 30,
+                    color: "white",
+                    fontWeight: "800",
+                    textAlign: "center",
+                  }}
+                >
+                  A
+                </Text>
+              </Pressable>
+              <Pressable
+                onPressIn={() => setHintWpressed(true)}
+                onPressOut={() => setHintWpressed(false)}
+                style={hintWpressed ? styles.hintPressed : styles.hint}
+              >
+                <Text
+                  style={{
+                    fontSize: 30,
+                    color: "white",
+                    fontWeight: "800",
+                    textAlign: "center",
+                  }}
+                >
+                  ?
+                </Text>
+              </Pressable>
+              </View>
+              )}
+              
+            
+            {logoOrder.indexOf(logo!.toString()) < logoOrder.length - 1 ? (
+              <View style={{ flex: 1 }}>
+                <Link
+                  replace
+                  href={`/levels/1/${
+                    logoOrder[logoOrder.indexOf(logo!.toString()) + 1]
+                  }`}
+                  asChild
+                >
+                  <Text style={styles.next}>→</Text>
+                </Link>
+              </View>
+            ) : (
+              <Text style={{ flex: 1 }}>&nbsp;</Text>
+            )}
+          </View>
+          <TextInput
+            ref={inputRef}
+            style={{ opacity: 0, height: 0, width: 0 }}
+            onChangeText={handleTextChange}
+            value={text}
+          />
         </View>
-      )}
-    </View>
+        {correct && (
+          <View
+            style={{
+              backgroundColor: "#39963c",
+              width: "100%",
+              padding: 24,
+              margin: 30,
+              marginHorizontal: "auto",
+              borderRadius: 10,
+              flexGrow: 1,
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: 1 },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+              elevation: 5,
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 30,
+                fontWeight: "700",
+                color: "white",
+                textAlign: "center",
+              }}
+            >
+              OIKEIN
+            </Text>
+            <Image
+              style={{
+                objectFit: "contain",
+                margin: "auto",
+                width: 50,
+                height: 50,
+              }}
+              source={require("../images/correct.png")}
+            ></Image>
+            <Pressable>
+              <View
+                style={{
+                  backgroundColor: "white",
+                  padding: 10,
+                  borderRadius: 10,
+                  marginHorizontal: "auto",
+                }}
+              >
+                <Link replace href="/levels/1" asChild>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      fontWeight: "bold",
+                      color: "#39963c",
+                      textAlign: "center",
+                      margin: "auto",
+                    }}
+                  >
+                    &nbsp;Sulje&nbsp;
+                  </Text>
+                </Link>
+              </View>
+            </Pressable>
+          </View>
+        )}
+      </View>
     </View>
   );
 }
@@ -274,23 +383,40 @@ const styles = StyleSheet.create({
   previous: {
     fontSize: 40,
     fontWeight: "bold",
-    flex: 1,
+    //flex: 1,
     textAlign: "left",
     padding: 6,
-    
   },
   next: {
     fontSize: 40,
     fontWeight: "bold",
-    flex: 1,
+    //flex: 1,
     textAlign: "right",
     padding: 6,
   },
   image: {
-    width: "70%",
-    height: 260,
+    width: "60%",
+    height: 230,
     objectFit: "contain",
     marginHorizontal: "auto",
     //backgroundColor: "red"
+  },
+  hint: {
+    flex: 1,
+    backgroundColor: "#c4ba9b",
+    borderRadius: 30,
+    marginLeft: 10,
+    justifyContent: "center",
+    borderColor: "#ded2af",
+    borderWidth: 3,
+  },
+  hintPressed: {
+    flex: 1,
+    backgroundColor: "#ded2af",
+    borderRadius: 30,
+    marginLeft: 10,
+    justifyContent: "center",
+    borderColor: "#ded2af",
+    borderWidth: 3,
   }
 });

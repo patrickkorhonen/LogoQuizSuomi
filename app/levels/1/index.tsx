@@ -52,7 +52,7 @@ export default function Level1() {
           if (data) {
             const prevArray = logoArray;
             prevArray.push(logo.answer);
-            setLogoArray([...prevArray]);
+            setLogoArray([...logoArray]);
             //console.log(logoArray)
           }
         });
