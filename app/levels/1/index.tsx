@@ -13,17 +13,32 @@ import { getItem, clear, getLevelGuessed } from "@/app/Storage/storage";
 
 const images = {
   hesburger: require("./images/hesburger.png"),
-  bmw: require("./images/bmw.png"),
+  fazer: require("./images/fazer.png"),
+  finnair: require("./images/finnair.png"),
+  prisma: require("./images/prisma.png"),
+  mtv3: require("./images/mtv3.png"),
+  fiskars: require("./images/fiskars.png"),
+  taffel: require("./images/taffel.png"),
+  finnkino: require("./images/finnkino.png"),
+  panda: require("./images/panda.png"),
+  valio: require("./images/valio.png"),
+  dna: require("./images/dna.png"),
+  neste: require("./images/neste.png"),
 };
 
 const logos = [
   { id: 1, answer: "hesburger", image: images.hesburger },
-  { id: 2, answer: "bmw", image: images.bmw },
-  { id: 3, answer: "citroen", image: images.bmw },
-  { id: 4, answer: "dhl", image: images.bmw },
-  { id: 5, answer: "ebay", image: images.bmw },
-  { id: 6, answer: "facebookfacebook", image: images.bmw },
-  { id: 7, answer: "abc def", image: images.bmw },
+  { id: 2, answer: "fazer", image: images.fazer },
+  { id: 3, answer: "finnair", image: images.finnair },
+  { id: 4, answer: "prisma", image: images.prisma },
+  { id: 5, answer: "mtv3", image: images.mtv3 },
+  { id: 6, answer: "fiskars", image: images.fiskars },
+  { id: 7, answer: "taffel", image: images.taffel },
+  { id: 8, answer: "finnkino", image: images.finnkino },
+  { id: 9, answer: "panda", image: images.panda },
+  { id: 10, answer: "valio", image: images.valio },
+  { id: 11, answer: "dna", image: images.dna },
+  { id: 12, answer: "neste", image: images.neste },
 ];
 
 export default function Level1() {
@@ -89,8 +104,9 @@ export default function Level1() {
               {logo.image && (
                 <ImageBackground
                   style={{
-                    height: 120,
-                    width: 120,
+                    height: 90,
+                    width: 90,
+                    margin: 18
                     //objectFit: "contain",
                   }}
                   resizeMode="contain"

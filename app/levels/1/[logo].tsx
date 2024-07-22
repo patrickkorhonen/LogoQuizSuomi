@@ -6,10 +6,31 @@ import { setItem, getItem, setlevelGuessed } from "@/app/Storage/storage";
 const images = {
   hesburger: require('./images/hesburger.png'),
   hesburgerC: require('./images/hesburgerC.png'),
-  bmw: require('./images/bmw.png'),
+  fazer: require('./images/fazer.png'),
+  fazerC: require('./images/fazerC.png'),
+  finnair: require('./images/finnair.png'),
+  finnairC: require('./images/finnairC.png'),
+  prisma: require('./images/prisma.png'),
+  prismaC: require('./images/prismaC.png'),
+  mtv3: require('./images/mtv3.png'),
+  mtv3C: require('./images/mtv3C.png'),
+  fiskars: require('./images/fiskars.png'),
+  fiskarsC: require('./images/fiskarsC.png'),
+  taffel: require('./images/taffel.png'),
+  taffelC: require('./images/taffelC.png'),
+  finnkino: require('./images/finnkino.png'),
+  finnkinoC: require('./images/finnkinoC.png'),
+  panda: require('./images/panda.png'),
+  pandaC: require('./images/pandaC.png'),
+  valio: require('./images/valio.png'),
+  valioC: require('./images/valioC.png'),
+  dna: require('./images/dna.png'),
+  dnaC: require('./images/dnaC.png'),
+  neste: require('./images/neste.png'),
+  nesteC: require('./images/nesteC.png'),
 };
 
-const logoOrder = ["hesburger", "bmw", "citroen", "dhl", "ebay", "facebookfacebook", "abc def"];
+const logoOrder = ["hesburger", "fazer", "finnair", "prisma", "mtv3", "fiskars", "taffel", "finnkino", "panda", "valio", "dna", "neste"];
 
 export default function Logo() {
   const local = useLocalSearchParams();
@@ -20,11 +41,7 @@ export default function Logo() {
   const image = images[logo as keyof typeof images];
   const fullImage = images[`${logo}C` as keyof typeof images];
   const [correct, setCorrect] = useState(false);
-/*
-  useEffect(() => {
-    setTimeout(() => (inputRef.current as TextInput | null)?.focus(), 530)
-  }, []);
-*/
+
 useEffect(() => {
   const fetchData = async ()=> {
   const data = await getItem(`${logo!.toString()}`)
@@ -40,9 +57,11 @@ useEffect(() => {
 
 
   const handleTextChange = (newText: string) => {
-    if (newText.trim() === text) {
+    if (newText.length < text.length && newText === text.trim()) {
+      onChangeText(newText.slice(0, -1));
+    } else if (newText.trim() === text) {
       return;
-    }
+    } else {
     if (newText.length <= logoArr.length) {
       if (logoArr[newText.length] === " ") {
         onChangeText(newText + " ");
@@ -60,6 +79,7 @@ useEffect(() => {
     else if (newText.length === logoArr.length) {
       console.log("väärin")
     }
+  }
   };
 
   return (
@@ -77,6 +97,7 @@ useEffect(() => {
           flexDirection: "row",
           //justifyContent: "center",
           alignItems: "flex-end",
+          marginBottom: 16,
         }}
       >
         <Link replace href="/levels/1" asChild>
@@ -106,6 +127,7 @@ useEffect(() => {
               flexDirection: "row",
               justifyContent: "center",
               flexWrap: "wrap",
+              marginTop: 30,
             }}
           >
             {logoArr.map((letter, index) => (
@@ -160,7 +182,7 @@ useEffect(() => {
           backgroundColor: "#39963c",
           width: "100%",
           padding: 24,
-          margin: 40,
+          margin: 10,
           marginHorizontal: "auto",
           borderRadius: 10,
           flexGrow: 1,
@@ -265,9 +287,10 @@ const styles = StyleSheet.create({
     padding: 6,
   },
   image: {
-    height: 300,
-    width: "80%",
+    width: "70%",
+    height: 260,
     objectFit: "contain",
     marginHorizontal: "auto",
+    //backgroundColor: "red"
   }
 });
