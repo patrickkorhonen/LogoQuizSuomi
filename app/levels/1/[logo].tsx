@@ -7,6 +7,7 @@ import {
   TextInput,
   Pressable,
   Image,
+  Alert,
 } from "react-native";
 import { setItem, getItem, setlevelGuessed } from "@/app/Storage/storage";
 
@@ -63,6 +64,41 @@ export default function Logo() {
   const [correct, setCorrect] = useState(false);
   const [hintCpressed, setHintCpressed] = useState(false);
   const [hintWpressed, setHintWpressed] = useState(false);
+  const [hintedLetters, setHintedLetters] = useState("");
+
+  const showWordAlert = () =>
+    Alert.alert("Näytä vastaus", "300 kolikkoa", [
+      {
+        text: 'Peruuta',
+        style: 'cancel',
+      },
+      {text: 'OK', onPress: () => {
+        onChangeText(`${logo!.toString()}`);
+        setCorrect(true), (inputRef.current as TextInput | null)?.blur();
+        setItem(`${logo!.toString()}`, "true");
+        setlevelGuessed("1");
+      }},
+    ]);
+
+  const showLetterAlert = () =>
+    Alert.alert("Näytä kirjain", "100 kolikkoa", [
+      {
+        text: 'Peruuta',
+        style: 'cancel',
+      },
+      {text: 'OK', onPress: () => {
+        handleTextChange(`${hintedLetters}${logo!.toString().slice(hintedLetters.length, hintedLetters.length + 1)}`);
+        //onChangeText(`${hintedLetters}${logo!.toString().slice(hintedLetters.length, hintedLetters.length + 1)}`);
+        if (logo!.toString().slice(hintedLetters.length + 1, hintedLetters.length + 2) === " ") {
+          setHintedLetters(hintedLetters + logo!.toString().slice(hintedLetters.length, hintedLetters.length + 1) + " ");
+        } else {
+          setHintedLetters(hintedLetters + logo!.toString().slice(hintedLetters.length, hintedLetters.length + 1));
+        }
+        //setCorrect(true), (inputRef.current as TextInput | null)?.blur();
+        //setItem(`${logo!.toString()}`, "true");
+        //setlevelGuessed("1");
+      }},
+    ]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -194,6 +230,7 @@ export default function Logo() {
                 <Pressable
                 onPressIn={() => setHintCpressed(true)}
                 onPressOut={() => setHintCpressed(false)}
+                onPress={showLetterAlert}
                 style={hintCpressed ? styles.hintPressed : styles.hint}
               >
                 <Text
@@ -210,6 +247,7 @@ export default function Logo() {
               <Pressable
                 onPressIn={() => setHintWpressed(true)}
                 onPressOut={() => setHintWpressed(false)}
+                onPress={showWordAlert}
                 style={hintWpressed ? styles.hintPressed : styles.hint}
               >
                 <Text
@@ -405,7 +443,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#c4ba9b",
     borderRadius: 30,
-    marginLeft: 10,
+    marginHorizontal: 10,
     justifyContent: "center",
     borderColor: "#ded2af",
     borderWidth: 3,
@@ -414,7 +452,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#ded2af",
     borderRadius: 30,
-    marginLeft: 10,
+    marginHorizontal: 10,
     justifyContent: "center",
     borderColor: "#ded2af",
     borderWidth: 3,
