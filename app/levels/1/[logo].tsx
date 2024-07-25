@@ -16,6 +16,8 @@ import {
   getCoins,
   setCoins,
 } from "@/app/Storage/storage";
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faCoins } from "@fortawesome/free-solid-svg-icons/faCoins";
 
 const images = {
   hesburger: require("./images/hesburger.png"),
@@ -224,7 +226,10 @@ export default function Logo() {
           <Text style={styles.headerTextL}>←</Text>
         </Link>
         <Text style={styles.headerText}></Text>
-        <Text style={styles.headerTextR}>{coin}</Text>
+        <View style={{flexDirection: "row", width: "30%"}}>
+        <FontAwesomeIcon style={{alignSelf: "center"}} size={24} color="#ebd444" icon={faCoins} />
+        <Text style={styles.headerTextR}>x{coin}</Text>
+        </View>
       </View>
       <View style={{ padding: 20, flexGrow: 1 }}>
         {correct ? (
@@ -456,7 +461,7 @@ const styles = StyleSheet.create({
     marginLeft: 40,
   },
   headerTextR: {
-    fontSize: 26,
+    fontSize: 22,
     fontWeight: "900",
     color: "#fff",
     flex: 1,
