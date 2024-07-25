@@ -91,6 +91,9 @@ export default function Logo() {
         //onChangeText(`${hintedLetters}${logo!.toString().slice(hintedLetters.length, hintedLetters.length + 1)}`);
         if (logo!.toString().slice(hintedLetters.length + 1, hintedLetters.length + 2) === " ") {
           setHintedLetters(hintedLetters + logo!.toString().slice(hintedLetters.length, hintedLetters.length + 1) + " ");
+        } else if (logo!.toString().slice(hintedLetters.length + 1, hintedLetters.length + 2) === "-") {
+          setHintedLetters(hintedLetters + logo!.toString().slice(hintedLetters.length, hintedLetters.length + 1) + "-");
+
         } else {
           setHintedLetters(hintedLetters + logo!.toString().slice(hintedLetters.length, hintedLetters.length + 1));
         }
@@ -114,7 +117,7 @@ export default function Logo() {
   }, []);
 
   const handleTextChange = (newText: string) => {
-    if (newText.length < text.length && newText === text.trim()) {
+    if (newText.length < text.length && newText === text.trim() || newText.length < text.length && text[text.length - 1] === "-") {
       onChangeText(newText.slice(0, -1));
     } else if (newText.trim() === text) {
       return;
@@ -122,6 +125,8 @@ export default function Logo() {
       if (newText.length <= logoArr.length) {
         if (logoArr[newText.length] === " ") {
           onChangeText(newText + " ");
+        } else if (logoArr[newText.length] === "-") {
+          onChangeText(newText + "-");
         } else {
           onChangeText(newText);
         }
@@ -188,7 +193,7 @@ export default function Logo() {
             >
               {logoArr.map((letter, index) => (
                 <View key={index}>
-                  {text[index] != undefined && letter != " " ? (
+                  {text[index] != undefined && letter != " " && letter != "-" ? (
                     <View style={styles.boxtop}>
                       <Text style={styles.char}>{text[index]}</Text>
                       <Text style={styles.char2}>—</Text>
@@ -197,6 +202,11 @@ export default function Logo() {
                     <View style={styles.boxtop}>
                       <Text style={styles.char}>&nbsp;</Text>
                       <Text style={styles.char2}>&nbsp;</Text>
+                    </View>
+                  ) : letter === "-" ? (
+                    <View style={styles.boxtop}>
+                      <Text style={styles.char}>-</Text>
+                      <Text style={styles.invisible}>—</Text>
                     </View>
                   ) : (
                     <View style={styles.boxtop}>
@@ -456,5 +466,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderColor: "#ded2af",
     borderWidth: 3,
-  }
+  },
+  invisible: {
+      fontSize: 40,
+      fontWeight: "300",
+      textTransform: "uppercase",
+      opacity: 0,
+      textAlign: "center",
+      marginTop: -20,
+  },
 });
