@@ -20,6 +20,24 @@ export const setItem = async (key: string, value: string) => {
     }
   };
 
+  export const getCoins = async () => {
+    try {
+      const value = await AsyncStorage.getItem("coins");
+      return value != null ? JSON.parse(value) : 150;
+    } catch (error) {
+      console.error('Error getting item:', error);
+      return null;
+    }
+  }
+
+  export const setCoins = async (value: number) => {
+    try {
+      await AsyncStorage.setItem("coins", JSON.stringify(value));
+    } catch (error) {
+      console.error('Error setting item:', error);
+    }
+  }
+
   export const getLevelGuessed = async (level: string) => {
     try {
       const value = await AsyncStorage.getItem(level);

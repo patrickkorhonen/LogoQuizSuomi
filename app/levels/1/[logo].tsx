@@ -9,7 +9,13 @@ import {
   Image,
   Alert,
 } from "react-native";
-import { setItem, getItem, setlevelGuessed } from "@/app/Storage/storage";
+import {
+  setItem,
+  getItem,
+  setlevelGuessed,
+  getCoins,
+  setCoins,
+} from "@/app/Storage/storage";
 
 const images = {
   hesburger: require("./images/hesburger.png"),
@@ -38,19 +44,7 @@ const images = {
   nesteC: require("./images/nesteC.png"),
 };
 
-const logoOrder = [
-  "hesburger",
-  "fazer",
-  "finnair",
-  "prisma",
-  "mtv3",
-  "fiskars",
-  "taffel",
-  "finnkino",
-  "panda",
-  "valio",
-  "dna",
-  "neste",
+const logoOrder = ["hesburger", "fazer", "finnair", "prisma", "mtv3", "fiskars", "taffel", "finnkino", "panda", "valio", "dna", "neste",
 ];
 
 export default function Logo() {
@@ -65,44 +59,8 @@ export default function Logo() {
   const [hintCpressed, setHintCpressed] = useState(false);
   const [hintWpressed, setHintWpressed] = useState(false);
   const [hintedLetters, setHintedLetters] = useState("");
-
-  const showWordAlert = () =>
-    Alert.alert("Näytä vastaus", "300 kolikkoa", [
-      {
-        text: 'Peruuta',
-        style: 'cancel',
-      },
-      {text: 'OK', onPress: () => {
-        onChangeText(`${logo!.toString()}`);
-        setCorrect(true), (inputRef.current as TextInput | null)?.blur();
-        setItem(`${logo!.toString()}`, "true");
-        setlevelGuessed("1");
-      }},
-    ]);
-
-  const showLetterAlert = () =>
-    Alert.alert("Näytä kirjain", "100 kolikkoa", [
-      {
-        text: 'Peruuta',
-        style: 'cancel',
-      },
-      {text: 'OK', onPress: () => {
-        handleTextChange(`${hintedLetters}${logo!.toString().slice(hintedLetters.length, hintedLetters.length + 1)}`);
-        //onChangeText(`${hintedLetters}${logo!.toString().slice(hintedLetters.length, hintedLetters.length + 1)}`);
-        if (logo!.toString().slice(hintedLetters.length + 1, hintedLetters.length + 2) === " ") {
-          setHintedLetters(hintedLetters + logo!.toString().slice(hintedLetters.length, hintedLetters.length + 1) + " ");
-        } else if (logo!.toString().slice(hintedLetters.length + 1, hintedLetters.length + 2) === "-") {
-          setHintedLetters(hintedLetters + logo!.toString().slice(hintedLetters.length, hintedLetters.length + 1) + "-");
-
-        } else {
-          setHintedLetters(hintedLetters + logo!.toString().slice(hintedLetters.length, hintedLetters.length + 1));
-        }
-        //setCorrect(true), (inputRef.current as TextInput | null)?.blur();
-        //setItem(`${logo!.toString()}`, "true");
-        //setlevelGuessed("1");
-      }},
-    ]);
-
+  const [coin, setCoin] = useState(0); 
+  
   useEffect(() => {
     const fetchData = async () => {
       const data = await getItem(`${logo!.toString()}`);
@@ -116,8 +74,110 @@ export default function Logo() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getCoins();
+      setCoin(data)
+    };
+    fetchData();
+  }, []);
+
+  const showShopAlert = () =>
+    Alert.alert("Ei tarpeeksi kolikoita", "Hanki lisää kaupasta", [
+      {
+        text: "Peruuta",
+        style: "cancel",
+      },
+      {
+        text: "Kauppaan",
+        onPress: () => {
+        },
+      },
+    ])
+
+  const showWordAlert = () =>
+    Alert.alert("Näytä vastaus", "40 kolikkoa", [
+      {
+        text: "Peruuta",
+        style: "cancel",
+      },
+      {
+        text: "OK",
+        onPress: () => {
+          setCoins(coin - 40);
+          setCoin(coin - 40);
+          onChangeText(`${logo!.toString()}`);
+          setCorrect(true), (inputRef.current as TextInput | null)?.blur();
+          setItem(`${logo!.toString()}`, "true");
+          setlevelGuessed("1");
+        },
+      },
+    ]);
+
+  const showLetterAlert = () =>
+    Alert.alert("Näytä kirjain", "10 kolikkoa", [
+      {
+        text: "Peruuta",
+        style: "cancel",
+      },
+      {
+        text: "OK",
+        
+        onPress: () => {
+          setCoins(coin - 10);
+          setCoin(coin - 10);
+          handleTextChange(
+            `${hintedLetters}${logo!
+              .toString()
+              .slice(hintedLetters.length, hintedLetters.length + 1)}`
+          );
+          //onChangeText(`${hintedLetters}${logo!.toString().slice(hintedLetters.length, hintedLetters.length + 1)}`);
+          if (
+            logo!
+              .toString()
+              .slice(hintedLetters.length + 1, hintedLetters.length + 2) === " "
+          ) {
+            setHintedLetters(
+              hintedLetters +
+                logo!
+                  .toString()
+                  .slice(hintedLetters.length, hintedLetters.length + 1) +
+                " "
+            );
+          } else if (
+            logo!
+              .toString()
+              .slice(hintedLetters.length + 1, hintedLetters.length + 2) === "-"
+          ) {
+            setHintedLetters(
+              hintedLetters +
+                logo!
+                  .toString()
+                  .slice(hintedLetters.length, hintedLetters.length + 1) +
+                "-"
+            );
+          } else {
+            setHintedLetters(
+              hintedLetters +
+                logo!
+                  .toString()
+                  .slice(hintedLetters.length, hintedLetters.length + 1)
+            );
+          }
+          //setCorrect(true), (inputRef.current as TextInput | null)?.blur();
+          //setItem(`${logo!.toString()}`, "true");
+          //setlevelGuessed("1");
+        },
+      },
+    ]);
+
+  
+
   const handleTextChange = (newText: string) => {
-    if (newText.length < text.length && newText === text.trim() || newText.length < text.length && text[text.length - 1] === "-") {
+    if (
+      (newText.length < text.length && newText === text.trim()) ||
+      (newText.length < text.length && text[text.length - 1] === "-")
+    ) {
       onChangeText(newText.slice(0, -1));
     } else if (newText.trim() === text) {
       return;
@@ -157,14 +217,14 @@ export default function Logo() {
           flexDirection: "row",
           //justifyContent: "center",
           alignItems: "flex-end",
-          marginBottom: 0,
+          marginBottom: 10,
         }}
       >
         <Link replace href="/levels/1" asChild>
           <Text style={styles.headerTextL}>←</Text>
         </Link>
         <Text style={styles.headerText}></Text>
-        <Text style={styles.headerTextR}></Text>
+        <Text style={styles.headerTextR}>{coin}</Text>
       </View>
       <View style={{ padding: 20, flexGrow: 1 }}>
         {correct ? (
@@ -193,7 +253,9 @@ export default function Logo() {
             >
               {logoArr.map((letter, index) => (
                 <View key={index}>
-                  {text[index] != undefined && letter != " " && letter != "-" ? (
+                  {text[index] != undefined &&
+                  letter != " " &&
+                  letter != "-" ? (
                     <View style={styles.boxtop}>
                       <Text style={styles.char}>{text[index]}</Text>
                       <Text style={styles.char2}>—</Text>
@@ -234,47 +296,48 @@ export default function Logo() {
             ) : (
               <Text style={{ flex: 1 }}>&nbsp;</Text>
             )}
-            
-              {!correct && (
-                <View style={{flexDirection: "row", flex: 2}}>
+
+            {!correct && (
+              <View style={{ flexDirection: "row", flex: 2 }}>
                 <Pressable
-                onPressIn={() => setHintCpressed(true)}
-                onPressOut={() => setHintCpressed(false)}
-                onPress={showLetterAlert}
-                style={hintCpressed ? styles.hintPressed : styles.hint}
-              >
-                <Text
-                  style={{
-                    fontSize: 30,
-                    color: "white",
-                    fontWeight: "800",
-                    textAlign: "center",
-                  }}
+                  onPressIn={() => setHintCpressed(true)}
+                  onPressOut={() => setHintCpressed(false)}
+                  onPress={coin >= 10 ? showLetterAlert : showShopAlert}
+                  style={hintCpressed ? styles.hintPressed : styles.hint}
                 >
-                  A
-                </Text>
-              </Pressable>
-              <Pressable
-                onPressIn={() => setHintWpressed(true)}
-                onPressOut={() => setHintWpressed(false)}
-                onPress={showWordAlert}
-                style={hintWpressed ? styles.hintPressed : styles.hint}
-              >
-                <Text
-                  style={{
-                    fontSize: 30,
-                    color: "white",
-                    fontWeight: "800",
-                    textAlign: "center",
-                  }}
+                  <Text
+                    style={{
+                      fontSize: 30,
+                      color: "white",
+                      fontWeight: "800",
+                      textAlign: "center",
+                    }}
+                  >
+                    A
+                  </Text>
+                  <Text style={{color: "#ebd444", marginVertical: "auto", fontWeight: "800",}}>-10</Text>
+                </Pressable>
+                <Pressable
+                  onPressIn={() => setHintWpressed(true)}
+                  onPressOut={() => setHintWpressed(false)}
+                  onPress={coin >= 40 ? showWordAlert : showShopAlert}
+                  style={hintWpressed ? styles.hintPressed : styles.hint}
                 >
-                  ?
-                </Text>
-              </Pressable>
+                  <Text
+                    style={{
+                      fontSize: 30,
+                      color: "white",
+                      fontWeight: "800",
+                      textAlign: "center",
+                    }}
+                  >
+                    ?
+                  </Text>
+                  <Text style={{color: "#ebd444", marginVertical: "auto", fontWeight: "800",}}>-40</Text>
+                </Pressable>
               </View>
-              )}
-              
-            
+            )}
+
             {logoOrder.indexOf(logo!.toString()) < logoOrder.length - 1 ? (
               <View style={{ flex: 1 }}>
                 <Link
@@ -393,8 +456,8 @@ const styles = StyleSheet.create({
     marginLeft: 40,
   },
   headerTextR: {
-    fontSize: 20,
-    fontWeight: "bold",
+    fontSize: 26,
+    fontWeight: "900",
     color: "#fff",
     flex: 1,
     textAlign: "right",
@@ -452,9 +515,10 @@ const styles = StyleSheet.create({
   hint: {
     flex: 1,
     backgroundColor: "#5eb55b",
-    borderRadius:10,
+    borderRadius: 10,
     margin: 10,
     justifyContent: "center",
+    flexDirection: "row",
     //borderColor: "#ded2af",
     //borderWidth: 2,
   },
@@ -464,13 +528,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     margin: 10,
     justifyContent: "center",
+    flexDirection: "row",
   },
   invisible: {
-      fontSize: 40,
-      fontWeight: "300",
-      textTransform: "uppercase",
-      opacity: 0,
-      textAlign: "center",
-      marginTop: -20,
+    fontSize: 40,
+    fontWeight: "300",
+    textTransform: "uppercase",
+    opacity: 0,
+    textAlign: "center",
+    marginTop: -20,
   },
 });
