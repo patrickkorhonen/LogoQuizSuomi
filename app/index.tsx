@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Pressable } from "react-native";
+import { Text, View, StyleSheet, Pressable, Image } from "react-native";
 import { Link } from "expo-router";
 import { useState } from "react";
 
@@ -9,17 +9,7 @@ export default function Index() {
 
   return (
     <View style={styles.container}>
-      <Text
-        style={{
-          fontSize: 40,
-          fontWeight: "bold",
-          alignSelf: "center",
-          color: "#fff",
-          marginVertical: 120,
-        }}
-      >
-        Logo Quiz Suomi
-      </Text>
+      <Image style={{width: "100%", marginVertical: 60}} resizeMode="contain" source={require("../assets/images/logo_text.png")} />
       <Link href="/levels" asChild>
         <Pressable
           onPressIn={() => setPressed(true)}
@@ -59,7 +49,7 @@ export default function Index() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#a3f0a6",
+    backgroundColor: "#002f6c",
     height: "100%",
     padding: 40,
     //justifyContent: "center",
