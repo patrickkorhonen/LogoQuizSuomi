@@ -9,7 +9,8 @@ import {
   ImageBackground,
 } from "react-native";
 import { useEffect, useState } from "react";
-import { getItem, clear, getLevelGuessed } from "@/app/Storage/storage";
+import { getItem, clear, getLevelGuessed, getAllItems } from "@/app/Storage/storage";
+import { KeyValuePair } from "@react-native-async-storage/async-storage/lib/typescript/types";
 
 const images = {
   hesburger: require("./images/hesburger.png"),
@@ -41,10 +42,12 @@ const logos = [
   { id: 12, answer: "neste", image: images.neste },
 ];
 
+const logoOrder = ["hesburger", "fazer", "finnair", "prisma", "mtv3", "fiskars", "taffel", "finnkino", "panda", "valio", "dna", "neste"];
+
 export default function Level1() {
   const [pressed, setPressed] = useState(0);
   const [logoArray, setLogoArray] = useState<string[]>([]);
-
+ /*
   useEffect(() => {
     const fetchData = async () => {
       logos.map(async (logo) => {
@@ -57,6 +60,20 @@ export default function Level1() {
           }
         });
       });
+    };
+    fetchData();
+    //clear()
+  }, []);
+*/
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const logos = await getAllItems(logoOrder)
+      const filtered = logos?.filter(logo => logo[1] != null)
+      //console.log(filtered?.map(logo => logo[0]))
+      if (filtered != undefined) {
+        setLogoArray(filtered?.map(logo => logo[0]))
+      }
     };
     fetchData();
     //clear()

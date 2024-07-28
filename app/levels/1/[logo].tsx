@@ -15,6 +15,9 @@ import {
   setlevelGuessed,
   getCoins,
   setCoins,
+  setHintedLettersStorage,
+  getHintedLettersStorage,
+  removeHintedLetters,
 } from "@/app/Storage/storage";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCoins } from "@fortawesome/free-solid-svg-icons/faCoins";
@@ -66,10 +69,13 @@ export default function Logo() {
   useEffect(() => {
     const fetchData = async () => {
       const data = await getItem(`${logo!.toString()}`);
+      const hinted = await getHintedLettersStorage(logo!.toString());
       if (data === "true") {
         setCorrect(true);
         onChangeText(`${logo!.toString()}`);
       } else {
+        onChangeText(hinted ? hinted : "");
+        setHintedLetters(hinted ? hinted : "");
         setTimeout(() => (inputRef.current as TextInput | null)?.focus(), 530);
       }
     };
@@ -128,47 +134,17 @@ export default function Logo() {
         onPress: () => {
           setCoins(coin - 10);
           setCoin(coin - 10);
-          handleTextChange(
-            `${hintedLetters}${logo!
-              .toString()
-              .slice(hintedLetters.length, hintedLetters.length + 1)}`
-          );
-          //onChangeText(`${hintedLetters}${logo!.toString().slice(hintedLetters.length, hintedLetters.length + 1)}`);
-          if (
-            logo!
-              .toString()
-              .slice(hintedLetters.length + 1, hintedLetters.length + 2) === " "
-          ) {
-            setHintedLetters(
-              hintedLetters +
-                logo!
-                  .toString()
-                  .slice(hintedLetters.length, hintedLetters.length + 1) +
-                " "
-            );
-          } else if (
-            logo!
-              .toString()
-              .slice(hintedLetters.length + 1, hintedLetters.length + 2) === "-"
-          ) {
-            setHintedLetters(
-              hintedLetters +
-                logo!
-                  .toString()
-                  .slice(hintedLetters.length, hintedLetters.length + 1) +
-                "-"
-            );
+          handleTextChange(`${hintedLetters}${logo!.toString().slice(hintedLetters.length, hintedLetters.length + 1)}`);
+          if (logo!.toString().slice(hintedLetters.length + 1, hintedLetters.length + 2) === " ") {
+            setHintedLetters(hintedLetters + logo!.toString().slice(hintedLetters.length, hintedLetters.length + 1) + " ");
+            setHintedLettersStorage(logo!.toString(), hintedLetters + logo!.toString().slice(hintedLetters.length, hintedLetters.length + 1) + " ");
+          } else if (logo!.toString().slice(hintedLetters.length + 1, hintedLetters.length + 2) === "-") {
+            setHintedLetters(hintedLetters + logo!.toString().slice(hintedLetters.length, hintedLetters.length + 1) + "-");
+            setHintedLettersStorage(logo!.toString(), hintedLetters + logo!.toString().slice(hintedLetters.length, hintedLetters.length + 1) + "-");
           } else {
-            setHintedLetters(
-              hintedLetters +
-                logo!
-                  .toString()
-                  .slice(hintedLetters.length, hintedLetters.length + 1)
-            );
+            setHintedLetters(hintedLetters + logo!.toString().slice(hintedLetters.length, hintedLetters.length + 1));
+            setHintedLettersStorage(logo!.toString(), hintedLetters + logo!.toString().slice(hintedLetters.length, hintedLetters.length + 1));
           }
-          //setCorrect(true), (inputRef.current as TextInput | null)?.blur();
-          //setItem(`${logo!.toString()}`, "true");
-          //setlevelGuessed("1");
         },
       },
     ]);
@@ -198,6 +174,9 @@ export default function Logo() {
         console.log("oikein");
         setItem(`${logo!.toString()}`, "true");
         setlevelGuessed("1");
+        if (hintedLetters.length > 0) {
+          removeHintedLetters(logo!.toString());
+        }
       } else if (newText.length === logoArr.length) {
         console.log("väärin");
       }

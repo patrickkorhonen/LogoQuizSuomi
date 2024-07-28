@@ -1,7 +1,7 @@
 import { Link } from "expo-router";
 import { useEffect, useState } from "react";
 import { Text, View, StyleSheet, ScrollView, Pressable } from "react-native";
-import { getLevelGuessed } from "../Storage/storage";
+import { getLevelGuessed, getAllLevelsGuessed } from "../Storage/storage";
 
 export default function Levels() {
   const [pressed, setPressed] = useState(0);
@@ -15,33 +15,21 @@ export default function Levels() {
     { id: 5, title: "Taso 5" },
   ];
 
-  useEffect(() => {
-    const fetchData = async () => {
-      levels.map(async (level) => {
-        await getLevelGuessed(`${level.id}`).then((data) => {
-          if (data) {
-            const prevArray = progress;
-            prevArray.push(data);
-            setProgress([...prevArray]);
-            
-          } else {
-            const prevArray = progress;
-            prevArray.push("0");
-            setProgress([...prevArray]);
-          }
-        });
-      });
-    };
-    fetchData();
-  }, []);
+  const level = ["1", "2", "3", "4", "5"];
 
-  
+useEffect(() => {
+  const fetchData = async () => {
+    const guessed = await getAllLevelsGuessed(level)
+    setProgress(guessed!.map(logo => logo[1] != null ? logo[1] : "0")); 
+  };
+  fetchData();
+}, []);  
 
   return (
     <View style={styles.container}>
       <View
         style={{
-          backgroundColor: "#63b5d6",
+          backgroundColor: "#207d5e",
           height: 120,
           paddingBottom: 20,
           shadowColor: "#000",
@@ -104,14 +92,14 @@ export default function Levels() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#a3f0a6",
+    backgroundColor: "#fff",
     //justifyContent: "center",
   },
   level: {
     backgroundColor: "#e6927a",
     padding: 26,
-    margin: 20,
-    marginHorizontal: 40,
+    margin: 10,
+    marginHorizontal: 30,
     height: 150,
     //justifyContent: "center",
     alignItems: "center",
@@ -125,8 +113,8 @@ const styles = StyleSheet.create({
   levelPres: {
     backgroundColor: "#c77967",
     padding: 26,
-    margin: 20,
-    marginHorizontal: 40,
+    margin: 10,
+    marginHorizontal: 30,
     height: 150,
     //justifyContent: "center",
     alignItems: "center",

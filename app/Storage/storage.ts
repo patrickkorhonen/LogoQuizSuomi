@@ -1,6 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const level1 = ["hesburger", "bmw", "citroen", "dhl", "ebay", "facebookfaceboook"];
 
 export const setItem = async (key: string, value: string) => {
     try {
@@ -19,6 +18,16 @@ export const setItem = async (key: string, value: string) => {
       return null;
     }
   };
+
+  export const getAllItems = async (level: string[]) => {
+    try {
+      const values = await AsyncStorage.multiGet(level);
+      return values;
+    } catch (error) {
+      console.error('Error getting item:', error);
+      return null;
+    }
+  }
 
   export const getCoins = async () => {
     try {
@@ -49,6 +58,16 @@ export const setItem = async (key: string, value: string) => {
     }
   }
 
+  export const getAllLevelsGuessed = async (levels: string[]) => {
+    try {
+    const values = await AsyncStorage.multiGet(levels)
+    return values;
+    } catch (error) {
+      console.error('Error getting item:', error);
+      return null;
+    }
+  }
+
   export const setlevelGuessed = async (level: string) => {
     try {
       await getLevelGuessed(level).then((data) => {
@@ -62,7 +81,32 @@ export const setItem = async (key: string, value: string) => {
     } catch (error) {
       console.error('Error setting item:', error);
     }
-  
+  }
+
+  export const setHintedLettersStorage = async (logo: string, value: string) => {
+    try {
+      await AsyncStorage.setItem(logo + "hint", JSON.stringify(value));
+    } catch (error) {
+      console.error('Error setting item:', error);
+    }
+  }
+
+  export const getHintedLettersStorage = async (logo: string) => {
+    try {
+      const value = await AsyncStorage.getItem(logo + "hint");
+      return value != null ? JSON.parse(value) : null;
+    } catch (error) {
+      console.error('Error getting item:', error);
+      return null;
+    }
+  }
+
+  export const removeHintedLetters = async (logo: string) => {
+    try {
+      await AsyncStorage.removeItem(logo + "hint");
+    } catch (error) {
+      console.error('Error removing item:', error);
+    }
   }
 
   export const clear = async () => {
