@@ -21,6 +21,18 @@ import {
 } from "@/app/Storage/storage";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCoins } from "@fortawesome/free-solid-svg-icons/faCoins";
+import Animated, {
+  useSharedValue,
+  withTiming,
+  Easing,
+  useAnimatedStyle,
+  withRepeat,
+  withSequence,
+} from 'react-native-reanimated';
+
+const ANGLE = 6;
+const TIME = 100;
+const EASING = Easing.elastic(1.5);
 
 const images = {
   hesburger: require("./images/hesburger.png"),
@@ -64,7 +76,31 @@ export default function Logo() {
   const [hintCpressed, setHintCpressed] = useState(false);
   const [hintWpressed, setHintWpressed] = useState(false);
   const [hintedLetters, setHintedLetters] = useState("");
-  const [coin, setCoin] = useState(0); 
+  const [coin, setCoin] = useState(0);
+  const rotation = useSharedValue<number>(0);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ rotateZ: `${rotation.value}deg` }],
+  }));
+
+  const handleWrong = () => {
+    rotation.value = withSequence(
+      // deviate left to start from -ANGLE
+      withTiming(-ANGLE, { duration: TIME / 2, easing: EASING }),
+      // wobble between -ANGLE and ANGLE 7 times
+      withRepeat(
+        withTiming(ANGLE, {
+          duration: TIME,
+          easing: EASING,
+        }),
+        4,
+        true
+      ),
+      // go back to 0 at the end
+      withTiming(0, { duration: TIME / 2, easing: EASING })
+    );
+  };
+   
   
   useEffect(() => {
     const fetchData = async () => {
@@ -149,7 +185,6 @@ export default function Logo() {
       },
     ]);
 
-  
 
   const handleTextChange = (newText: string) => {
     if (
@@ -171,14 +206,13 @@ export default function Logo() {
       }
       if (newText.toLowerCase() === logo!.toString().toLowerCase()) {
         setCorrect(true), (inputRef.current as TextInput | null)?.blur();
-        console.log("oikein");
         setItem(`${logo!.toString()}`, "true");
         setlevelGuessed("1");
         if (hintedLetters.length > 0) {
           removeHintedLetters(logo!.toString());
         }
       } else if (newText.length === logoArr.length) {
-        console.log("väärin");
+        handleWrong();
       }
     }
   };
@@ -212,9 +246,12 @@ export default function Logo() {
       </View>
       <View style={{ padding: 20, flexGrow: 1 }}>
         {correct ? (
-          <Image style={styles.image} source={fullImage}></Image>
+          <Image style={styles.image2} source={fullImage}></Image>
         ) : (
+          <Animated.View 
+          style={[animatedStyle]} >
           <Image style={styles.image} source={image}></Image>
+          </Animated.View>
         )}
 
         <View>
@@ -490,6 +527,16 @@ const styles = StyleSheet.create({
     padding: 6,
   },
   image: {
+    width: "60%",
+    height: 230,
+    objectFit: "contain",
+    marginHorizontal: "auto",
+    //backgroundColor: "red"
+    //marginLeft: 0,
+    //marginRight: 0
+
+  },
+  image2: {
     width: "60%",
     height: 230,
     objectFit: "contain",
