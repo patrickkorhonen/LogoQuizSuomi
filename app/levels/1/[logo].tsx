@@ -29,6 +29,7 @@ import Animated, {
   withRepeat,
   withSequence,
 } from 'react-native-reanimated';
+import { Audio } from 'expo-av';
 
 const ANGLE = 6;
 const TIME = 100;
@@ -78,6 +79,29 @@ export default function Logo() {
   const [hintedLetters, setHintedLetters] = useState("");
   const [coin, setCoin] = useState(0);
   const rotation = useSharedValue<number>(0);
+  const [sound, setSound] = useState<any>();
+
+  async function playCorrectSound() {
+    const { sound } = await Audio.Sound.createAsync( require('../../../assets/sounds/correct.mp3')
+    );
+    setSound(sound);
+    await sound.playAsync();
+  }
+
+  async function playWrongSound() {
+    const { sound } = await Audio.Sound.createAsync( require('../../../assets/sounds/wrong.mp3')
+    );
+    setSound(sound);
+    await sound.playAsync();
+  }
+
+  useEffect(() => {
+    return sound
+      ? () => {
+          sound.unloadAsync();
+        }
+      : undefined;
+  }, [sound]);
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ rotateZ: `${rotation.value}deg` }],
@@ -205,6 +229,7 @@ export default function Logo() {
         }
       }
       if (newText.toLowerCase() === logo!.toString().toLowerCase()) {
+        playCorrectSound()
         setCorrect(true), (inputRef.current as TextInput | null)?.blur();
         setItem(`${logo!.toString()}`, "true");
         setlevelGuessed("1");
@@ -212,6 +237,7 @@ export default function Logo() {
           removeHintedLetters(logo!.toString());
         }
       } else if (newText.length === logoArr.length) {
+        playWrongSound()
         handleWrong();
       }
     }
