@@ -6,13 +6,15 @@ import { getLevelGuessed, getAllLevelsGuessed } from "../Storage/storage";
 export default function Levels() {
   const [pressed, setPressed] = useState(0);
   const [progress, setProgress] = useState<string[]>([]);
+  const [sum, setSum] = useState(0);
+  
 
   const levels = [
-    { id: 1, title: "Taso 1" },
-    { id: 2, title: "Taso 2" },
-    { id: 3, title: "Taso 3" },
-    { id: 4, title: "Taso 4" },
-    { id: 5, title: "Taso 5" },
+    { id: 1, title: "Taso 1", open: 0 },
+    { id: 2, title: "Taso 2", open: 8 },
+    { id: 3, title: "Taso 3", open: 18 },
+    { id: 4, title: "Taso 4", open: 28 },
+    { id: 5, title: "Taso 5", open: 38 },
   ];
 
   const level = ["1", "2", "3", "4", "5"];
@@ -20,6 +22,8 @@ export default function Levels() {
 useEffect(() => {
   const fetchData = async () => {
     const guessed = await getAllLevelsGuessed(level)
+    //console.log(summed)
+    setSum(guessed!.map(logo => logo[1] != null ? Number(logo[1]) : 0).reduce((a, b) => a + b, 0))
     setProgress(guessed!.map(logo => logo[1] != null ? logo[1] : "0")); 
   };
   fetchData();
@@ -60,7 +64,8 @@ useEffect(() => {
             marginBottom: 180,
           }}
         >
-          {levels.map((level) => (
+          {levels.map((level) => level.open <= sum ? (
+            
             <Link key={level.id} href={`levels/${level.id}`} asChild>
               <Pressable
                 onPressIn={() => setPressed(level.id)}
@@ -83,6 +88,12 @@ useEffect(() => {
                 <Text style={styles.textsm}>{progress[level.id - 1]}/12</Text>
               </Pressable>
             </Link>
+          ) : (
+            <View key={level.id} style={styles.levelLocked}>
+              <Text style={styles.text}>{level.title}</Text>
+              <Text style={styles.textsm}>Lukittu</Text>
+              <Text style={styles.textsm}>Taso aukeaa {level.open - sum} logon päästä</Text>
+            </View>
           ))}
         </View>
       </ScrollView>
@@ -100,7 +111,7 @@ const styles = StyleSheet.create({
     padding: 26,
     margin: 10,
     marginHorizontal: 30,
-    height: 150,
+    //height: 150,
     //justifyContent: "center",
     alignItems: "center",
     borderRadius: 10,
@@ -115,7 +126,22 @@ const styles = StyleSheet.create({
     padding: 26,
     margin: 10,
     marginHorizontal: 30,
-    height: 150,
+    //height: 150,
+    //justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  levelLocked: {
+    backgroundColor: "#595959",
+    padding: 26,
+    margin: 10,
+    marginHorizontal: 30,
+    //height: 150,
     //justifyContent: "center",
     alignItems: "center",
     borderRadius: 10,
@@ -135,6 +161,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
+    margin: 2
   },
   progressbar: {
     backgroundColor: "#fff",

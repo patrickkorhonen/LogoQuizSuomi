@@ -178,6 +178,7 @@ export default function Logo() {
           setCorrect(true), (inputRef.current as TextInput | null)?.blur();
           setItem(`${logo!.toString()}`, "true");
           setlevelGuessed("1");
+          
         },
       },
     ]);
