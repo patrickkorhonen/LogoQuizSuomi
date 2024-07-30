@@ -172,8 +172,8 @@ export default function Logo() {
       {
         text: "OK",
         onPress: () => {
-          setCoins(coin - 40);
-          setCoin(coin - 40);
+          setCoins(coin - 38);
+          setCoin(coin - 38);
           onChangeText(`${logo!.toString()}`);
           setCorrect(true), (inputRef.current as TextInput | null)?.blur();
           setItem(`${logo!.toString()}`, "true");
@@ -233,6 +233,8 @@ export default function Logo() {
         setCorrect(true), (inputRef.current as TextInput | null)?.blur();
         setItem(`${logo!.toString()}`, "true");
         setlevelGuessed("1");
+        setCoin(coin + 2)
+        setCoins(coin + 2)
         if (hintedLetters.length > 0) {
           removeHintedLetters(logo!.toString());
         }
@@ -265,9 +267,9 @@ export default function Logo() {
           <Text style={styles.headerTextL}>←</Text>
         </Link>
         <Text style={styles.headerText}></Text>
-        <View style={{flexDirection: "row", width: "30%"}}>
-        <FontAwesomeIcon style={{alignSelf: "center"}} size={24} color="#ebd444" icon={faCoins} />
-        <Text style={styles.headerTextR}>x{coin}</Text>
+        <View style={{flexDirection: "row", flex: 1}}>
+        <FontAwesomeIcon style={{alignSelf: "center"}} size={22} color="#ebd444" icon={faCoins} />
+        <Text style={{fontSize: 22, fontWeight: "800", color: "#fff", marginHorizontal: 6}}>x{coin}</Text>
         </View>
       </View>
       <View style={{ padding: 20, flexGrow: 1 }}>
@@ -435,15 +437,17 @@ export default function Logo() {
             >
               OIKEIN
             </Text>
-            <Image
-              style={{
-                objectFit: "contain",
-                margin: "auto",
-                width: 50,
-                height: 50,
-              }}
-              source={require("../images/correct.png")}
-            ></Image>
+            <Text
+            style={{
+              fontSize: 30,
+              fontWeight: "700",
+              color: "white",
+              textAlign: "center",
+              marginVertical: "auto",
+            }}
+            >
+              +2 <FontAwesomeIcon size={30} style={{alignSelf: "center"}} color="#ebd444" icon={faCoins} />
+            </Text>
             <Pressable>
               <View
                 style={{
@@ -451,6 +455,7 @@ export default function Logo() {
                   padding: 10,
                   borderRadius: 10,
                   marginHorizontal: "auto",
+                  
                 }}
               >
                 <Link replace href="/levels/1" asChild>

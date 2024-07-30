@@ -47,24 +47,7 @@ const logoOrder = ["hesburger", "fazer", "finnair", "prisma", "mtv3", "fiskars",
 export default function Level1() {
   const [pressed, setPressed] = useState(0);
   const [logoArray, setLogoArray] = useState<string[]>([]);
- /*
-  useEffect(() => {
-    const fetchData = async () => {
-      logos.map(async (logo) => {
-        await getItem(`${logo.answer}`).then((data) => {
-          if (data) {
-            const prevArray = logoArray;
-            prevArray.push(logo.answer);
-            setLogoArray([...logoArray]);
-            //console.log(logoArray)
-          }
-        });
-      });
-    };
-    fetchData();
-    //clear()
-  }, []);
-*/
+
 
   useEffect(() => {
     const fetchData = async () => {
