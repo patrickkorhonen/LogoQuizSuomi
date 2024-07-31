@@ -50,7 +50,7 @@ export default function Shop() {
         <Text
           style={styles.headerText}
         >
-          Valitse taso
+          Kauppa
         </Text>
         <Text style={styles.headerTextR}></Text>
       </View>
@@ -80,7 +80,7 @@ export default function Shop() {
           </View>
           <View style={{backgroundColor: "#7a7a7a", height: 2, marginVertical: 20, marginHorizontal: 30, borderRadius: 20}}></View>
           <View style={{flexDirection: "row", paddingHorizontal: 30, marginBottom: 16}}>
-              <Text style={{flex: 1, fontSize: 26, fontWeight: 800, color: "#9e810e"}}>Kolikot:</Text>
+              <Text style={{flex: 1, fontSize: 26, fontWeight: 800, color: "#9e810e"}}>Kolikot: </Text>
               <Text style={{fontSize: 26, fontWeight: 800, color: "#9e810e"}}>{coin}</Text>
             </View>
           {options.map((option) => (
