@@ -10,11 +10,11 @@ export default function Levels() {
   
 
   const levels = [
-    { id: 1, title: "Taso 1", open: 0 },
-    { id: 2, title: "Taso 2", open: 8 },
-    { id: 3, title: "Taso 3", open: 18 },
-    { id: 4, title: "Taso 4", open: 28 },
-    { id: 5, title: "Taso 5", open: 38 },
+    { id: 1, title: "Taso 1", open: 0, color: "#2f6e4b"},
+    { id: 2, title: "Taso 2", open: 8, color: "#cc1440"},
+    { id: 3, title: "Taso 3", open: 18, color: "#391cba"},
+    { id: 4, title: "Taso 4", open: 28, color: "#ff0000"},
+    { id: 5, title: "Taso 5", open: 38, color: "#ff0000"},
   ];
 
   const level = ["1", "2", "3", "4", "5"];
@@ -33,7 +33,7 @@ useEffect(() => {
     <View style={styles.container}>
       <View
         style={{
-          backgroundColor: "#207d5e",
+          backgroundColor: "#0063e3",
           height: 120,
           paddingBottom: 20,
           shadowColor: "#000",
@@ -60,8 +60,7 @@ useEffect(() => {
       <ScrollView>
         <View
           style={{
-            marginTop: 20,
-            marginBottom: 180,
+            marginVertical: 20,
           }}
         >
           {levels.map((level) => level.open <= sum ? (
@@ -71,21 +70,25 @@ useEffect(() => {
                 onPressIn={() => setPressed(level.id)}
                 onPressOut={() => setPressed(0)}
                 key={level.id}
-                style={pressed === level.id ? styles.levelPres : styles.level}
+                style={pressed === level.id ? {...styles.levelPres, backgroundColor: level.color, opacity: 0.8} : {...styles.level, backgroundColor: level.color}}
               >
+                
                 <Text style={styles.text}>{level.title}</Text>
+                <View style={{flexDirection: "row"}}>
+                <Text style={styles.textsm}>{progress[level.id - 1]}/12</Text>
                 <Text style={styles.textsm}>{((Number(progress[level.id - 1]) / 12) * 100).toFixed(1)}%</Text>
+                </View>
                 <View style={styles.progressbar}>
                   <View
                     style={{
-                      backgroundColor: "#ab4418",
-                      height: 6,
+                      backgroundColor: "#fff",
+                      height: 5,
                       width: `${(Number(progress[level.id - 1]) / 12) * 100}%`,
                       borderRadius: 10,
                     }}
                   ></View>
                 </View>
-                <Text style={styles.textsm}>{progress[level.id - 1]}/12</Text>
+                
               </Pressable>
             </Link>
           ) : (
@@ -104,11 +107,12 @@ useEffect(() => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
+    height: "100%",
     //justifyContent: "center",
   },
   level: {
-    backgroundColor: "#e6927a",
-    padding: 26,
+    //backgroundColor: "#e6927a",
+    padding: 20,
     margin: 10,
     marginHorizontal: 30,
     //height: 150,
@@ -122,8 +126,8 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   levelPres: {
-    backgroundColor: "#c77967",
-    padding: 26,
+    //backgroundColor: "#c77967",
+    padding: 20,
     margin: 10,
     marginHorizontal: 30,
     //height: 150,
@@ -138,7 +142,7 @@ const styles = StyleSheet.create({
   },
   levelLocked: {
     backgroundColor: "#595959",
-    padding: 26,
+    padding: 20,
     margin: 10,
     marginHorizontal: 30,
     //height: 150,
@@ -161,11 +165,11 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
-    margin: 2
+    margin: 6
   },
   progressbar: {
-    backgroundColor: "#fff",
-    height: 6,
+    backgroundColor: "#242424",
+    height: 5,
     width: "100%",
     margin: 6,
     borderRadius: 10,

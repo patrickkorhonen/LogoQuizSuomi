@@ -250,7 +250,7 @@ export default function Logo() {
     <View style={{ height: "100%", flexDirection: "column" }}>
       <View
         style={{
-          backgroundColor: "#63b5d6",
+          backgroundColor: "#2f6e4b",
           height: 120,
           paddingBottom: 20,
           shadowColor: "#000",
@@ -303,9 +303,7 @@ export default function Logo() {
             >
               {logoArr.map((letter, index) => (
                 <View key={index}>
-                  {text[index] != undefined &&
-                  letter != " " &&
-                  letter != "-" ? (
+                  {text[index] != undefined && letter != " " && letter != "-" ? (
                     <View style={styles.boxtop}>
                       <Text style={styles.char}>{text[index]}</Text>
                       <Text style={styles.char2}>—</Text>
@@ -417,7 +415,7 @@ export default function Logo() {
               backgroundColor: "#39963c",
               width: "100%",
               padding: 24,
-              margin: 30,
+              margin: 40,
               marginHorizontal: "auto",
               borderRadius: 10,
               flexGrow: 1,
@@ -541,8 +539,9 @@ const styles = StyleSheet.create({
   boxtop: {
     flexDirection: "column",
     flexWrap: "wrap",
-    width: 40,
+    //width: 50,
     justifyContent: "center",
+    marginHorizontal: 2
   },
   previous: {
     fontSize: 40,
@@ -561,7 +560,8 @@ const styles = StyleSheet.create({
   image: {
     width: "60%",
     height: 230,
-    objectFit: "contain",
+    //objectFit: "contain",
+    resizeMode: "contain",
     marginHorizontal: "auto",
     //backgroundColor: "red"
     //marginLeft: 0,
@@ -571,7 +571,8 @@ const styles = StyleSheet.create({
   image2: {
     width: "60%",
     height: 230,
-    objectFit: "contain",
+    //objectFit: "contain",
+    resizeMode: "contain",
     marginHorizontal: "auto",
     //backgroundColor: "red"
   },

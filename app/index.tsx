@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   buttonSh: {
-    backgroundColor: "#e3d646",
+    backgroundColor: "#d1c438",
     flexGrow: 1,
     padding: 20,
     margin: 5,
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   buttonSh2: {
-    backgroundColor: "#cfc340",
+    backgroundColor: "#b8ac30",
     flexGrow: 1,
     padding: 20,
     margin: 5,

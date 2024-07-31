@@ -66,7 +66,7 @@ export default function Level1() {
     <View style={styles.container}>
       <View
         style={{
-          backgroundColor: "#63b5d6",
+          backgroundColor: "#2f6e4b",
           height: 120,
           paddingBottom: 20,
           shadowColor: "#000",
@@ -85,7 +85,7 @@ export default function Level1() {
         <Text style={styles.headerText}>Taso 1</Text>
         <Text style={styles.headerTextR}></Text>
       </View>
-
+      <ScrollView> 
       <View style={styles.logosContainer}>
         {logos.map((logo) => (
           <Link replace key={logo.id} href={`levels/1/${logo.answer}`} asChild>
@@ -104,8 +104,8 @@ export default function Level1() {
               {logo.image && (
                 <ImageBackground
                   style={{
-                    height: 90,
-                    width: 90,
+                    height: 84,
+                    width: 84,
                     margin: 18
                     //objectFit: "contain",
                   }}
@@ -129,12 +129,14 @@ export default function Level1() {
           </Link>
         ))}
       </View>
+      </ScrollView> 
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    height: "100%"
     //backgroundColor: "#fff",
   },
   logo: {
