@@ -106,7 +106,7 @@ useEffect(() => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#fff",
+    backgroundColor: "#dce7f5",
     height: "100%",
     //justifyContent: "center",
   },
