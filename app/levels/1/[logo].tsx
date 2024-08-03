@@ -81,6 +81,7 @@ export default function Logo() {
     transform: [{ rotateZ: `${rotation.value}deg` }],
   }));
 
+  
   const handleWrong = () => {
     rotation.value = withSequence(
       // deviate left to start from -ANGLE
