@@ -1,4 +1,4 @@
-import { Link } from "expo-router";
+import { Link, useLocalSearchParams } from "expo-router";
 import {
   Text,
   View,
@@ -10,41 +10,15 @@ import {
 } from "react-native";
 import { useEffect, useState } from "react";
 import { getItem, clear, getLevelGuessed, getAllItems } from "@/app/Storage/storage";
-import { KeyValuePair } from "@react-native-async-storage/async-storage/lib/typescript/types";
+import { logoOrder1, logos1 } from "@/arrays/levelArrays";
 
-const images = {
-  hesburger: require("./images/hesburger.png"),
-  fazer: require("./images/fazer.png"),
-  finnair: require("./images/finnair.png"),
-  prisma: require("./images/prisma.png"),
-  mtv3: require("./images/mtv3.png"),
-  fiskars: require("./images/fiskars.png"),
-  taffel: require("./images/taffel.png"),
-  finnkino: require("./images/finnkino.png"),
-  panda: require("./images/panda.png"),
-  valio: require("./images/valio.png"),
-  dna: require("./images/dna.png"),
-  neste: require("./images/neste.png"),
-};
 
-const logos = [
-  { id: 1, answer: "hesburger", image: images.hesburger },
-  { id: 2, answer: "fazer", image: images.fazer },
-  { id: 3, answer: "finnair", image: images.finnair },
-  { id: 4, answer: "prisma", image: images.prisma },
-  { id: 5, answer: "mtv3", image: images.mtv3 },
-  { id: 6, answer: "fiskars", image: images.fiskars },
-  { id: 7, answer: "taffel", image: images.taffel },
-  { id: 8, answer: "finnkino", image: images.finnkino },
-  { id: 9, answer: "panda", image: images.panda },
-  { id: 10, answer: "valio", image: images.valio },
-  { id: 11, answer: "dna", image: images.dna },
-  { id: 12, answer: "neste", image: images.neste },
-];
+const logos = logos1
 
-const logoOrder = ["hesburger", "fazer", "finnair", "prisma", "mtv3", "fiskars", "taffel", "finnkino", "panda", "valio", "dna", "neste"];
+const logoOrder = logoOrder1
 
 export default function Level1() {
+  const local = useLocalSearchParams();
   const [pressed, setPressed] = useState(0);
   const [logoArray, setLogoArray] = useState<string[]>([]);
 

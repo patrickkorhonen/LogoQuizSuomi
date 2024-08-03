@@ -30,40 +30,14 @@ import Animated, {
   withSequence,
 } from 'react-native-reanimated';
 import { Audio } from 'expo-av';
+import { logoOrder1, images1 } from "@/arrays/levelArrays";
 
 const ANGLE = 6;
 const TIME = 100;
 const EASING = Easing.elastic(1.5);
 
-const images = {
-  hesburger: require("./images/hesburger.png"),
-  hesburgerC: require("./images/hesburgerC.png"),
-  fazer: require("./images/fazer.png"),
-  fazerC: require("./images/fazerC.png"),
-  finnair: require("./images/finnair.png"),
-  finnairC: require("./images/finnairC.png"),
-  prisma: require("./images/prisma.png"),
-  prismaC: require("./images/prismaC.png"),
-  mtv3: require("./images/mtv3.png"),
-  mtv3C: require("./images/mtv3C.png"),
-  fiskars: require("./images/fiskars.png"),
-  fiskarsC: require("./images/fiskarsC.png"),
-  taffel: require("./images/taffel.png"),
-  taffelC: require("./images/taffelC.png"),
-  finnkino: require("./images/finnkino.png"),
-  finnkinoC: require("./images/finnkinoC.png"),
-  panda: require("./images/panda.png"),
-  pandaC: require("./images/pandaC.png"),
-  valio: require("./images/valio.png"),
-  valioC: require("./images/valioC.png"),
-  dna: require("./images/dna.png"),
-  dnaC: require("./images/dnaC.png"),
-  neste: require("./images/neste.png"),
-  nesteC: require("./images/nesteC.png"),
-};
-
-const logoOrder = ["hesburger", "fazer", "finnair", "prisma", "mtv3", "fiskars", "taffel", "finnkino", "panda", "valio", "dna", "neste",
-];
+const images = images1
+const logoOrder = logoOrder1
 
 export default function Logo() {
   const local = useLocalSearchParams();

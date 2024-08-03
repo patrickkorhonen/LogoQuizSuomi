@@ -3,25 +3,22 @@ import { useEffect, useState } from "react";
 import { Text, View, StyleSheet, ScrollView, Pressable } from "react-native";
 import { getLevelGuessed, getAllLevelsGuessed } from "../Storage/storage";
 
+const levels = [
+  { id: 1, title: "Taso 1", open: 0, color: "#2f6e4b"},
+  { id: 2, title: "Taso 2", open: 8, color: "#cc1440"},
+  { id: 3, title: "Taso 3", open: 17, color: "#391cba"},
+  { id: 4, title: "Taso 4", open: 26, color: "#ff0000"},
+  { id: 5, title: "Taso 5", open: 35, color: "#ff0000"},
+];
+
 export default function Levels() {
   const [pressed, setPressed] = useState(0);
   const [progress, setProgress] = useState<string[]>([]);
   const [sum, setSum] = useState(0);
-  
-
-  const levels = [
-    { id: 1, title: "Taso 1", open: 0, color: "#2f6e4b"},
-    { id: 2, title: "Taso 2", open: 8, color: "#cc1440"},
-    { id: 3, title: "Taso 3", open: 17, color: "#391cba"},
-    { id: 4, title: "Taso 4", open: 26, color: "#ff0000"},
-    { id: 5, title: "Taso 5", open: 35, color: "#ff0000"},
-  ];
-
-  const level = ["1", "2", "3", "4", "5"];
 
 useEffect(() => {
   const fetchData = async () => {
-    const guessed = await getAllLevelsGuessed(level)
+    const guessed = await getAllLevelsGuessed(levels.map(level => level.id.toString()));
     //console.log(summed)
     setSum(guessed!.map(logo => logo[1] != null ? Number(logo[1]) : 0).reduce((a, b) => a + b, 0))
     setProgress(guessed!.map(logo => logo[1] != null ? logo[1] : "0")); 
