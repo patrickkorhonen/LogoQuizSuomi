@@ -30,18 +30,17 @@ import Animated, {
   withSequence,
 } from 'react-native-reanimated';
 import { Audio } from 'expo-av';
-import { logoOrder1, images1 } from "@/arrays/levelArrays";
+import { logoOrder, images } from "@/arrays/levelArrays";
 
 const ANGLE = 6;
 const TIME = 100;
 const EASING = Easing.elastic(1.5);
 
-const images = images1
-const logoOrder = logoOrder1
 
 export default function Logo() {
   const local = useLocalSearchParams();
   const logo = local.logo;
+  const level = local.level;
   const logoArr = (typeof logo === "string" ? logo : "").split("");
   const [text, onChangeText] = useState("");
   const inputRef = useRef(null);
@@ -54,6 +53,13 @@ export default function Logo() {
   const [coin, setCoin] = useState(0);
   const rotation = useSharedValue<number>(0);
   const [sound, setSound] = useState<any>();
+  const [logoOrderLevel, setLogoOrderLevel] = useState<string[]>([]);
+
+  
+
+  useEffect(() => {
+    setLogoOrderLevel(logoOrder[Number(level!.toString()) - 1]);
+  }, []);
 
   async function playCorrectSound() {
     const { sound } = await Audio.Sound.createAsync( require('../../../assets/sounds/correct.mp3')
@@ -152,7 +158,7 @@ export default function Logo() {
           onChangeText(`${logo!.toString()}`);
           setCorrect(true), (inputRef.current as TextInput | null)?.blur();
           setItem(`${logo!.toString()}`, "true");
-          setlevelGuessed("1");
+          setlevelGuessed(level!.toString());
           
         },
       },
@@ -208,7 +214,7 @@ export default function Logo() {
         playCorrectSound()
         setCorrect(true), (inputRef.current as TextInput | null)?.blur();
         setItem(`${logo!.toString()}`, "true");
-        setlevelGuessed("1");
+        setlevelGuessed(level!.toString());
         setCoin(coin + 2)
         setCoins(coin + 2)
         if (hintedLetters.length > 0) {
@@ -239,7 +245,7 @@ export default function Logo() {
           marginBottom: 10,
         }}
       >
-        <Link replace href="/levels/1" asChild>
+        <Link replace href={`/levels/${level}`} asChild>
           <Text style={styles.headerTextL}>←</Text>
         </Link>
         <Text style={styles.headerText}></Text>
@@ -304,12 +310,12 @@ export default function Logo() {
             </View>
           </Pressable>
           <View style={{ flexDirection: "row" }}>
-            {logoOrder.indexOf(logo!.toString()) > 0 ? (
+            {logoOrderLevel.indexOf(logo!.toString()) > 0 ? (
               <View style={{ flex: 1 }}>
                 <Link
                   replace
-                  href={`/levels/1/${
-                    logoOrder[logoOrder.indexOf(logo!.toString()) - 1]
+                  href={`/levels/${level}/${
+                    logoOrderLevel[logoOrderLevel.indexOf(logo!.toString()) - 1]
                   }`}
                   asChild
                 >
@@ -361,12 +367,12 @@ export default function Logo() {
               </View>
             )}
 
-            {logoOrder.indexOf(logo!.toString()) < logoOrder.length - 1 ? (
+            {logoOrderLevel.indexOf(logo!.toString()) < logoOrderLevel.length - 1 ? (
               <View style={{ flex: 1 }}>
                 <Link
                   replace
-                  href={`/levels/1/${
-                    logoOrder[logoOrder.indexOf(logo!.toString()) + 1]
+                  href={`/levels/${level}/${
+                    logoOrderLevel[logoOrderLevel.indexOf(logo!.toString()) + 1]
                   }`}
                   asChild
                 >
@@ -432,7 +438,7 @@ export default function Logo() {
                   
                 }}
               >
-                <Link replace href="/levels/1" asChild>
+                <Link replace href={`/levels/${level}`} asChild>
                   <Text
                     style={{
                       fontSize: 20,

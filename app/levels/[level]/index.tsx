@@ -10,22 +10,28 @@ import {
 } from "react-native";
 import { useEffect, useState } from "react";
 import { getItem, clear, getLevelGuessed, getAllItems } from "@/app/Storage/storage";
-import { logoOrder1, logos1 } from "@/arrays/levelArrays";
+import { logoOrder, logos, colors } from "@/arrays/levelArrays";
 
 
-const logos = logos1
 
-const logoOrder = logoOrder1
 
-export default function Level1() {
+export default function Level() {
   const local = useLocalSearchParams();
+  const level = local.level;
   const [pressed, setPressed] = useState(0);
   const [logoArray, setLogoArray] = useState<string[]>([]);
+  const [logosLevel, setLogosLevel] = useState<any[]>([]);
+
+  
+
+  useEffect(() => {
+    setLogosLevel(logos[Number(level!.toString()) - 1]);
+  }, []);
 
 
   useEffect(() => {
     const fetchData = async () => {
-      const logos = await getAllItems(logoOrder)
+      const logos = await getAllItems(logoOrder[Number(level!.toString()) - 1])
       const filtered = logos?.filter(logo => logo[1] != null)
       //console.log(filtered?.map(logo => logo[0]))
       if (filtered != undefined) {
@@ -40,7 +46,7 @@ export default function Level1() {
     <View style={styles.container}>
       <View
         style={{
-          backgroundColor: "#2f6e4b",
+          backgroundColor: colors[Number(level!.toString()) - 1],
           height: 120,
           paddingBottom: 20,
           shadowColor: "#000",
@@ -56,13 +62,13 @@ export default function Level1() {
         <Link replace href="/levels" asChild>
           <Text style={styles.headerTextL}>←</Text>
         </Link>
-        <Text style={styles.headerText}>Taso 1</Text>
+        <Text style={styles.headerText}>Taso {level}</Text>
         <Text style={styles.headerTextR}></Text>
       </View>
       <ScrollView> 
       <View style={styles.logosContainer}>
-        {logos.map((logo) => (
-          <Link replace key={logo.id} href={`levels/1/${logo.answer}`} asChild>
+        {logosLevel.map((logo) => (
+          <Link replace key={logo.id} href={`levels/${level}/${logo.answer}`} asChild>
             <Pressable
               onPressIn={() => setPressed(logo.id)}
               onPressOut={() => setPressed(0)}

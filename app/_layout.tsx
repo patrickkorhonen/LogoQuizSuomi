@@ -7,8 +7,8 @@ export default function Layout() {
       <Stack.Screen options={{ headerShown: false, animation: "fade", animationDuration: 150 }} name="stats/index" />
       <Stack.Screen options={{ headerShown: false, animation: "fade", animationDuration: 150 }} name="shop/index" />
       <Stack.Screen options={{ headerShown: false, animation: "fade", animationDuration: 150, gestureEnabled: false }} name="levels/index" />
-      <Stack.Screen options={{ headerShown: false, animation: "fade", animationDuration: 150, gestureEnabled: false  }} name="levels/1/index" />
-      <Stack.Screen options={{ headerShown: false, animation: "fade", animationDuration: 150, gestureEnabled: false }} name="levels/1/[logo]" />
+      <Stack.Screen options={{ headerShown: false, animation: "fade", animationDuration: 150, gestureEnabled: false  }} name="levels/[level]/index" />
+      <Stack.Screen options={{ headerShown: false, animation: "fade", animationDuration: 150, gestureEnabled: false }} name="levels/[level]/[logo]" />
     </Stack>
   );
 }
