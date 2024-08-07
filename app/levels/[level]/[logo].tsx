@@ -30,7 +30,7 @@ import Animated, {
   withSequence,
 } from 'react-native-reanimated';
 import { Audio } from 'expo-av';
-import { logoOrder, images } from "@/arrays/levelArrays";
+import { images, logos } from "@/arrays/levelArrays";
 
 const ANGLE = 6;
 const TIME = 100;
@@ -58,7 +58,8 @@ export default function Logo() {
   
 
   useEffect(() => {
-    setLogoOrderLevel(logoOrder[Number(level!.toString()) - 1]);
+    //setLogoOrderLevel(logoOrder[Number(level!.toString()) - 1]);
+      setLogoOrderLevel(logos[Number(level!.toString()) - 1].map(logo => logo.answer));
   }, []);
 
   async function playCorrectSound() {
@@ -198,7 +199,7 @@ export default function Logo() {
       (newText.length < text.length && text[text.length - 1] === "-")
     ) {
       onChangeText(newText.slice(0, -1));
-    } else if (newText.trim() === text) {
+    } else if (newText.trim() === text.trim()) {
       return;
     } else {
       if (newText.length <= logoArr.length) {
@@ -297,7 +298,7 @@ export default function Logo() {
                   ) : letter === "-" ? (
                     <View style={styles.boxtop}>
                       <Text style={styles.char}>-</Text>
-                      <Text style={styles.invisible}>—</Text>
+                      <Text style={styles.invisible}>&nbsp;</Text>
                     </View>
                   ) : (
                     <View style={styles.boxtop}>
@@ -503,14 +504,14 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   char: {
-    fontSize: 36,
+    fontSize: 34,
     fontWeight: "400",
     textTransform: "uppercase",
 
     textAlign: "center",
   },
   char2: {
-    fontSize: 40,
+    fontSize: 36,
     fontWeight: "300",
     textTransform: "uppercase",
 
@@ -522,7 +523,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     //width: 50,
     justifyContent: "center",
-    marginHorizontal: 2
+    marginHorizontal: 1
   },
   previous: {
     fontSize: 40,

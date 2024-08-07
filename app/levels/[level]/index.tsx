@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { useEffect, useState } from "react";
 import { getItem, clear, getLevelGuessed, getAllItems } from "@/app/Storage/storage";
-import { logoOrder, logos, colors } from "@/arrays/levelArrays";
+import { logos, colors } from "@/arrays/levelArrays";
 
 
 
@@ -31,8 +31,8 @@ export default function Level() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const logos = await getAllItems(logoOrder[Number(level!.toString()) - 1])
-      const filtered = logos?.filter(logo => logo[1] != null)
+      const logoArray = await getAllItems(logos[Number(level!.toString()) - 1].map(logo => logo.answer));
+      const filtered = logoArray?.filter(logo => logo[1] != null)
       //console.log(filtered?.map(logo => logo[0]))
       if (filtered != undefined) {
         setLogoArray(filtered?.map(logo => logo[0]))
