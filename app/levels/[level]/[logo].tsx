@@ -280,7 +280,7 @@ export default function Logo() {
                 flexDirection: "row",
                 justifyContent: "center",
                 flexWrap: "wrap",
-                marginTop: 30,
+                marginTop: 44,
               }}
             >
               {logoArr.map((letter, index) => (
@@ -298,7 +298,7 @@ export default function Logo() {
                   ) : letter === "-" ? (
                     <View style={styles.boxtop}>
                       <Text style={styles.char}>-</Text>
-                      <Text style={styles.invisible}>&nbsp;</Text>
+                      <Text style={styles.char2}>&nbsp;</Text>
                     </View>
                   ) : (
                     <View style={styles.boxtop}>
@@ -504,14 +504,14 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   char: {
-    fontSize: 34,
+    fontSize: 32,
     fontWeight: "400",
     textTransform: "uppercase",
 
     textAlign: "center",
   },
   char2: {
-    fontSize: 36,
+    fontSize: 34,
     fontWeight: "300",
     textTransform: "uppercase",
 
@@ -523,7 +523,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     //width: 50,
     justifyContent: "center",
-    marginHorizontal: 1
+    marginHorizontal: 1,
   },
   previous: {
     fontSize: 40,
