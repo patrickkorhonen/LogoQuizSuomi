@@ -9,7 +9,7 @@ import {
   ImageBackground,
 } from "react-native";
 import { useEffect, useState } from "react";
-import { getAllItems } from "@/app/Storage/storage";
+import { getAllItems, clear } from "@/app/Storage/storage";
 import { logos, colors } from "@/arrays/levelArrays";
 
 
