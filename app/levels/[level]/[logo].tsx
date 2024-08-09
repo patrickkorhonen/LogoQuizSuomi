@@ -18,6 +18,7 @@ import {
   setHintedLettersStorage,
   getHintedLettersStorage,
   removeHintedLetters,
+  getSound
 } from "@/app/Storage/storage";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCoins } from "@fortawesome/free-solid-svg-icons/faCoins";
@@ -53,15 +54,16 @@ export default function Logo() {
   const [coin, setCoin] = useState(0);
   const rotation = useSharedValue<number>(0);
   const [sound, setSound] = useState<any>();
+  const [soundOn, setSoundOn] = useState<boolean>(true);
   const [logoOrderLevel, setLogoOrderLevel] = useState<string[]>([]);
 
   
-
+/*
   useEffect(() => {
     //setLogoOrderLevel(logoOrder[Number(level!.toString()) - 1]);
       setLogoOrderLevel(logos[Number(level!.toString()) - 1].map(logo => logo.answer));
   }, []);
-
+*/
   async function playCorrectSound() {
     const { sound } = await Audio.Sound.createAsync( require('../../../assets/sounds/correct.mp3')
     );
@@ -109,7 +111,12 @@ export default function Logo() {
    
   
   useEffect(() => {
+    setLogoOrderLevel(logos[Number(level!.toString()) - 1].map(logo => logo.answer));
     const fetchData = async () => {
+      const sound = await getSound();
+      setSoundOn(sound);
+      const coins = await getCoins();
+      setCoin(coins)
       const data = await getItem(`${logo!.toString()}`);
       const hinted = await getHintedLettersStorage(logo!.toString());
       if (data === "true") {
@@ -123,7 +130,7 @@ export default function Logo() {
     };
     fetchData();
   }, []);
-
+/*
   useEffect(() => {
     const fetchData = async () => {
       const data = await getCoins();
@@ -131,7 +138,7 @@ export default function Logo() {
     };
     fetchData();
   }, []);
-
+*/
   const showShopAlert = () =>
     Alert.alert("Ei tarpeeksi kolikoita", "Hanki lisää kaupasta", [
       {
@@ -212,7 +219,9 @@ export default function Logo() {
         }
       }
       if (newText.toLowerCase() === logo!.toString().toLowerCase()) {
-        playCorrectSound()
+        if (soundOn) {
+          playCorrectSound()
+        }
         setCorrect(true), (inputRef.current as TextInput | null)?.blur();
         setItem(`${logo!.toString()}`, "true");
         setlevelGuessed(level!.toString());
@@ -222,7 +231,9 @@ export default function Logo() {
           removeHintedLetters(logo!.toString());
         }
       } else if (newText.length === logoArr.length) {
-        playWrongSound()
+        if (soundOn) {
+          playWrongSound()
+        }
         handleWrong();
       }
     }

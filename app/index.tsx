@@ -9,7 +9,11 @@ export default function Index() {
 
   return (
     <View style={styles.container}>
-      <Image style={{width: "100%", marginVertical: 60}} resizeMode="contain" source={require("../assets/images/logo_text.png")} />
+      <Image
+        style={{ width: "100%", marginVertical: 60 }}
+        resizeMode="contain"
+        source={require("../assets/images/logo_text.png")}
+      />
       <Link href="/levels" asChild>
         <Pressable
           onPressIn={() => setPressed(true)}
@@ -30,7 +34,7 @@ export default function Index() {
             onPressOut={() => setPressedSt(false)}
             style={pressedSt ? styles.buttonSt2 : styles.buttonSt}
           >
-            <Text style={styles.text}>Tilastot</Text>
+            <Text style={styles.text}>Asetukset</Text>
           </Pressable>
         </Link>
         <Link href="/shop" asChild>

@@ -29,6 +29,24 @@ export const setItem = async (key: string, value: string) => {
     }
   }
 
+  export const getSound = async () => {
+    try {
+      const value = await AsyncStorage.getItem("sound");
+      return value != null ? JSON.parse(value) : true;
+    } catch (error) {
+      console.error('Error getting item:', error);
+      return null;
+    }
+  }
+
+  export const setSound = async (value: boolean) => {
+    try {
+      await AsyncStorage.setItem("sound", JSON.stringify(value));
+    } catch (error) {
+      console.error('Error setting item:', error);
+    }
+  }
+
   export const getCoins = async () => {
     try {
       const value = await AsyncStorage.getItem("coins");

@@ -1,7 +1,7 @@
 import { Link } from "expo-router";
 import { useEffect, useState } from "react";
-import { Text, View, StyleSheet, ScrollView } from "react-native";
-import { getAllLevelsGuessed } from "../Storage/storage";
+import { Text, View, StyleSheet, ScrollView, Switch } from "react-native";
+import { getAllLevelsGuessed, getSound, setSound } from "../Storage/storage";
 
 const levels = [
   { id: 1, title: "Taso 1"},
@@ -14,12 +14,20 @@ const levels = [
 export default function Stats() {
   const [sum, setSum] = useState(0);
   const [progress, setProgress] = useState<string[]>([]);
+  const [isEnabled, setIsEnabled] = useState(true);
+  const toggleSwitch = () => {
+    setIsEnabled(!isEnabled);
+    setSound(!isEnabled);
+  } 
+
 
   const level = ["1", "2", "3", "4", "5"];
  
   useEffect(() => {
     const fetchData = async () => {
       const guessed = await getAllLevelsGuessed(level)
+      const sound = await getSound();
+      setIsEnabled(sound);
       //console.log(summed)
       setSum(guessed!.map(logo => logo[1] != null ? Number(logo[1]) : 0).reduce((a, b) => a + b, 0))
       setProgress(guessed!.map(logo => logo[1] != null ? logo[1] : "0")); 
@@ -51,11 +59,21 @@ export default function Stats() {
         <Text
           style={styles.headerText}
         >
-          Tilastot
+          Asetukset
         </Text>
         <Text style={styles.headerTextR}></Text>
       </View>
       <ScrollView>
+        <View style={{flexDirection: "row", marginHorizontal: 40, marginTop: 30}}>
+          <Text style={{flex: 1, color: "#fff", fontSize: 20, fontWeight: 700, marginVertical: "auto"}}>Äänet</Text>
+      <Switch
+        trackColor={{false: '#767577', true: '#fcfcfc'}}
+        thumbColor={isEnabled ? '#609adb' : '#f4f3f4'}
+        ios_backgroundColor="#3e3e3e"
+        onValueChange={toggleSwitch}
+        value={isEnabled}
+      />
+      </View>
         <Text style={{color: "#fff", fontSize: 32, fontWeight: 700, textAlign: "center", margin: 30}}>Logoja ratkaistu</Text>
         <View
           style={{
