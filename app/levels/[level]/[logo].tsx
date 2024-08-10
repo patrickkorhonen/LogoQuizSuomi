@@ -245,7 +245,7 @@ export default function Logo() {
         style={{
           backgroundColor: "#2f6e4b",
           height: 120,
-          paddingBottom: 20,
+          //paddingBottom: 20,
           shadowColor: "#000",
           shadowOffset: { width: 0, height: 1 },
           shadowOpacity: 0.25,
@@ -257,13 +257,15 @@ export default function Logo() {
           marginBottom: 10,
         }}
       >
-        <Link replace href={`/levels/${level}`} asChild>
+        <Link style={{flex: 1}} replace href={`/levels/${level}`}>
+        <View style={{padding: 24}}>
           <Text style={styles.headerTextL}>←</Text>
+          </View>
         </Link>
         <Text style={styles.headerText}></Text>
-        <View style={{flexDirection: "row", flex: 1}}>
-        <FontAwesomeIcon style={{alignSelf: "center"}} size={22} color="#ebd444" icon={faCoins} />
-        <Text style={{fontSize: 22, fontWeight: "800", color: "#fff", marginHorizontal: 6}}>x{coin}</Text>
+        <View style={{flexDirection: "row", flex: 1, marginBottom: 26, justifyContent: "center"}}>
+        <FontAwesomeIcon style={{alignSelf: "center"}} size={20} color="#ebd444" icon={faCoins} />
+        <Text style={{fontSize: 20, fontWeight: "800", color: "#fff", marginHorizontal: 6}}>x{coin}</Text>
         </View>
       </View>
       <View style={{ padding: 20, flexGrow: 1 }}>
@@ -492,27 +494,19 @@ const styles = StyleSheet.create({
     marginBottom: "auto",
   },
   headerTextL: {
-    fontSize: 26,
+    fontSize: 20,
     fontWeight: "900",
     color: "#fff",
-    flex: 1,
-    textAlign: "left",
-    marginLeft: 40,
-  },
-  headerTextR: {
-    fontSize: 22,
-    fontWeight: "900",
-    color: "#fff",
-    flex: 1,
-    textAlign: "right",
-    marginRight: 40,
+    //flex: 1,
+    //textAlign: "left",
+    marginLeft: 20,
   },
   headerText: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#fff",
+    //fontSize: 20,
+    //fontWeight: "bold",
+    //color: "#fff",
     flex: 1,
-    textAlign: "center",
+    //textAlign: "center",
   },
   char: {
     fontSize: 32,

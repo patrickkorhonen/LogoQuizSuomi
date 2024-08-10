@@ -8,7 +8,7 @@ const levels = [
   { id: 2, title: "Taso 2", open: 0, color: "#cc1440"},
   { id: 3, title: "Taso 3", open: 0, color: "#391cba"},
   { id: 4, title: "Taso 4", open: 0, color: "#e38d14"},
-  { id: 5, title: "Taso 5", open: 35, color: "#ff0000"},
+  { id: 5, title: "Taso 5", open: 0, color: "#9bb072"},
 ];
 
 export default function Levels() {
@@ -32,7 +32,7 @@ useEffect(() => {
         style={{
           backgroundColor: "#0063e3",
           height: 120,
-          paddingBottom: 20,
+          //paddingBottom: 20,
           shadowColor: "#000",
           shadowOffset: { width: 0, height: 1 },
           shadowOpacity: 0.25,
@@ -44,8 +44,10 @@ useEffect(() => {
         }}
       >
         
-        <Link href="/" asChild>
+        <Link style={{flex: 1}} href="/" >
+        <View style={{padding: 24}}>
             <Text style={styles.headerTextL}>←</Text>
+        </View>
         </Link>
         <Text
           style={styles.headerText}
@@ -173,20 +175,20 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   headerTextL: {
-    fontSize: 26,
+    fontSize: 20,
     fontWeight: "900",
     color: "#fff",
-    flex: 1,
-    textAlign: "left",
-    marginLeft: 40,
+    //flex: 1,
+    //textAlign: "left",
+    marginLeft: 20,
   },
   headerTextR: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#fff",
+    //fontSize: 20,
+    //fontWeight: "bold",
+    //color: "#fff",
     flex: 1,
-    textAlign: "right",
-    marginRight: 40,
+    //textAlign: "right",
+    //marginRight: 40,
   },
   headerText: {
     fontSize: 20,
@@ -194,6 +196,6 @@ const styles = StyleSheet.create({
     color: "#fff",
     flex: 1,
     textAlign: "center",
-    marginBottom: 4,
+    marginBottom: 26,
   },
 });

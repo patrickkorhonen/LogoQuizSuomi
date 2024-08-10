@@ -48,7 +48,7 @@ export default function Level() {
         style={{
           backgroundColor: colors[Number(level!.toString()) - 1],
           height: 120,
-          paddingBottom: 20,
+          //paddingBottom: 20,
           shadowColor: "#000",
           shadowOffset: { width: 0, height: 1 },
           shadowOpacity: 0.25,
@@ -59,8 +59,10 @@ export default function Level() {
           alignItems: "flex-end",
         }}
       >
-        <Link replace href="/levels" asChild>
+        <Link style={{flex: 1}} replace href="/levels" >
+        <View style={{padding: 24}}>
           <Text style={styles.headerTextL}>←</Text>
+          </View>
         </Link>
         <Text style={styles.headerText}>Taso {level}</Text>
         <Text style={styles.headerTextR}></Text>
@@ -149,12 +151,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   headerTextL: {
-    fontSize: 26,
+    fontSize: 20,
     fontWeight: "900",
     color: "#fff",
-    flex: 1,
-    textAlign: "left",
-    marginLeft: 40,
+    //flex: 1,
+    //textAlign: "left",
+    marginLeft: 20,
   },
   headerTextR: {
     fontSize: 20,
@@ -162,7 +164,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     flex: 1,
     textAlign: "right",
-    marginRight: 40,
+    //marginRight: 40,
   },
   headerText: {
     fontSize: 20,
@@ -170,6 +172,6 @@ const styles = StyleSheet.create({
     color: "#fff",
     flex: 1,
     textAlign: "center",
-    marginBottom: 4,
+    marginBottom: 26,
   },
 });

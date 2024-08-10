@@ -32,7 +32,7 @@ export default function Shop() {
         style={{
           backgroundColor: "#d1c438",
           height: 120,
-          paddingBottom: 20,
+          //paddingBottom: 20,
           shadowColor: "#000",
           shadowOffset: { width: 0, height: 1 },
           shadowOpacity: 0.25,
@@ -44,8 +44,10 @@ export default function Shop() {
         }}
       >
         
-        <Link href="/" asChild>
+        <Link style={{flex: 1}} href="/">
+        <View style={{padding: 24}}>
             <Text style={styles.headerTextL}>←</Text>
+        </View>
         </Link>
         <Text
           style={styles.headerText}
@@ -173,20 +175,20 @@ const styles = StyleSheet.create({
     margin: 6
   },
   headerTextL: {
-    fontSize: 26,
+    fontSize: 20,
     fontWeight: "900",
     color: "#fff",
-    flex: 1,
-    textAlign: "left",
-    marginLeft: 40,
+    //flex: 1,
+    //textAlign: "left",
+    marginLeft: 20,
   },
   headerTextR: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#fff",
+    //fontSize: 20,
+    //fontWeight: "bold",
+    //color: "#fff",
     flex: 1,
-    textAlign: "right",
-    marginRight: 40,
+    //textAlign: "right",
+    //marginRight: 40,
   },
   headerText: {
     fontSize: 20,
@@ -194,6 +196,6 @@ const styles = StyleSheet.create({
     color: "#fff",
     flex: 1,
     textAlign: "center",
-    marginBottom: 4,
+    marginBottom: 26,
   },
 });
