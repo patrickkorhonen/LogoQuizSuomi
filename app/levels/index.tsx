@@ -8,7 +8,7 @@ const levels = [
   { id: 2, title: "Taso 2", open: 0, color: "#cc1440"},
   { id: 3, title: "Taso 3", open: 0, color: "#391cba"},
   { id: 4, title: "Taso 4", open: 0, color: "#e38d14"},
-  { id: 5, title: "Taso 5", open: 0, color: "#9bb072"},
+  { id: 5, title: "Taso 5", open: 0, color: "#4a3a2f"},
 ];
 
 export default function Levels() {

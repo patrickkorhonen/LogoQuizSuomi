@@ -304,10 +304,7 @@ export default function Logo() {
                       <Text style={styles.char2}>—</Text>
                     </View>
                   ) : letter === " " ? (
-                    <View style={styles.boxtop}>
-                      <Text style={styles.char}>&nbsp;</Text>
-                      <Text style={styles.char2}>&nbsp;</Text>
-                    </View>
+                    <View style={{backgroundColor: "red", width: 500, height: 0}}></View>
                   ) : letter === "-" ? (
                     <View style={styles.boxtop}>
                       <Text style={styles.char}>-</Text>
