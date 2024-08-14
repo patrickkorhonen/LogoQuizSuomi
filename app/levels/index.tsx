@@ -1,14 +1,14 @@
-import { Link } from "expo-router";
+import { Href, Link } from "expo-router";
 import { useEffect, useState } from "react";
 import { Text, View, StyleSheet, ScrollView, Pressable } from "react-native";
 import { getAllLevelsGuessed } from "../Storage/storage";
 
 const levels = [
   { id: 1, title: "Taso 1", open: 0, color: "#2f6e4b"},
-  { id: 2, title: "Taso 2", open: 0, color: "#cc1440"},
-  { id: 3, title: "Taso 3", open: 0, color: "#391cba"},
-  { id: 4, title: "Taso 4", open: 0, color: "#e38d14"},
-  { id: 5, title: "Taso 5", open: 0, color: "#4a3a2f"},
+  { id: 2, title: "Taso 2", open: 8, color: "#cc1440"},
+  { id: 3, title: "Taso 3", open: 19, color: "#391cba"},
+  { id: 4, title: "Taso 4", open: 28, color: "#e38d14"},
+  { id: 5, title: "Taso 5", open: 37, color: "#4a3a2f"},
 ];
 
 export default function Levels() {
@@ -64,7 +64,7 @@ useEffect(() => {
         >
           {levels.map((level) => level.open <= sum ? (
             
-            <Link key={level.id} href={`levels/${level.id}`} asChild>
+            <Link key={level.id} href={`levels/${level.id}` as Href} asChild>
               <Pressable
                 onPressIn={() => setPressed(level.id)}
                 onPressOut={() => setPressed(0)}

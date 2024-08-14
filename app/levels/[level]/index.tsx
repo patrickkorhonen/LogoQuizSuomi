@@ -1,4 +1,4 @@
-import { Link, useLocalSearchParams } from "expo-router";
+import { Href, Link, useLocalSearchParams } from "expo-router";
 import {
   Text,
   View,
@@ -13,6 +13,11 @@ import { getAllItems, clear } from "@/app/Storage/storage";
 import { logos, colors } from "@/arrays/levelArrays";
 
 
+type LogoArray = {
+  id: number;
+  answer: string;
+  image: any;
+}
 
 
 export default function Level() {
@@ -20,7 +25,7 @@ export default function Level() {
   const level = local.level;
   const [pressed, setPressed] = useState(0);
   const [logoArray, setLogoArray] = useState<string[]>([]);
-  const [logosLevel, setLogosLevel] = useState<any[]>([]);
+  const [logosLevel, setLogosLevel] = useState<LogoArray[]>([]);
 
   
 
@@ -70,7 +75,7 @@ export default function Level() {
       <ScrollView> 
       <View style={styles.logosContainer}>
         {logosLevel.map((logo) => (
-          <Link replace key={logo.id} href={`levels/${level}/${logo.answer}`} asChild>
+          <Link replace key={logo.id} href={`levels/${level}/${logo.answer}` as Href} asChild>
             <Pressable
               onPressIn={() => setPressed(logo.id)}
               onPressOut={() => setPressed(0)}
