@@ -1,4 +1,4 @@
-In this project I've created a logo quiz game with Finnish logos for mobile devices. Built with react native, expo and TypeScript/JavaScript.
+In this project I've created a logo quiz game with Finnish logos for mobile devices. Developed with react native, expo and TypeScript/JavaScript.
 
 <img src="https://github.com/user-attachments/assets/afc9b674-4002-4b6b-b634-afa3cc6949b8" width=30%>
 <img src="https://github.com/user-attachments/assets/047cdecb-aeff-4cf3-9b3b-a8a004a89692" width=30%>
